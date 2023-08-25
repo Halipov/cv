@@ -1,20 +1,16 @@
-import 'package:flutter/material.dart';
+import 'package:cv/config/app_config.dart';
+import 'package:cv/config/environment/build_type.dart';
+import 'package:cv/config/environment/environment.dart';
+import 'package:cv/config/urls.dart';
+import 'package:cv/runner.dart';
 
 void main() {
-  runApp(const MainApp());
-}
+  Environment.init(
+    buildType: BuildType.debug,
+    config: AppConfig(
+      url: Url.testUrl,
+    ),
+  );
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
-    );
-  }
+  run();
 }
