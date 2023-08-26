@@ -56,8 +56,8 @@ class _AppState extends State<App> {
           supportedLocales: _localizations,
 
           ///Navigation.
-          routeInformationParser: AppRouter.instance().defaultRouteParser(),
-          routerDelegate: AppRouter.instance().delegate(
+          routeInformationParser: _scope.router.defaultRouteParser(),
+          routerDelegate: _scope.router.delegate(
             navigatorObservers: () => [
               TalkerRouteObserver(talker),
             ],
