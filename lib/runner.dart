@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cv/features/app/di/app_scope.dart';
 import 'package:cv/util/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -19,8 +20,12 @@ void _runApp() {
       await SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
       ]);
+      final scope = AppScope();
+      await scope.initTheme();
       runApp(
-        const App(),
+        App(
+          appScope: scope,
+        ),
       );
     },
     (exception, stack) => talker.handle(exception, stack),
