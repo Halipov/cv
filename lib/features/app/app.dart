@@ -2,7 +2,6 @@ import 'package:cv/assets/themes/theme_data.dart';
 import 'package:cv/features/app/di/app_scope.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/common/widgets/di_scope/di_scope.dart';
-import 'package:cv/features/navigation/router.dart';
 import 'package:cv/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
