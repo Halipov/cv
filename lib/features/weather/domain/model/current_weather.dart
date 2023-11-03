@@ -1,10 +1,10 @@
-import 'package:cv/features/wheather/domain/model/_model.dart';
+import 'package:cv/features/weather/domain/model/_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'current_wheather.g.dart';
+part 'current_weather.g.dart';
 
 @JsonSerializable()
-class CurrentWheather {
+class CurrentWeather {
   @JsonKey(name: 'last_updated')
   final DateTime lastUpdate;
   @JsonKey(name: 'temp_c')
@@ -24,7 +24,7 @@ class CurrentWheather {
   final double cloud;
   final double uv;
 
-  CurrentWheather({
+  CurrentWeather({
     required this.lastUpdate,
     required this.temp,
     required this.feelsLike,
@@ -37,8 +37,8 @@ class CurrentWheather {
     required this.cloud,
     required this.uv,
   });
-  factory CurrentWheather.fromJson(Map<String, dynamic> json) =>
-      _$CurrentWheatherFromJson(json);
+  factory CurrentWeather.fromJson(Map<String, dynamic> json) =>
+      _$CurrentWeatherFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CurrentWheatherToJson(this);
+  Map<String, dynamic> toJson() => _$CurrentWeatherToJson(this);
 }

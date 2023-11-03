@@ -1,9 +1,9 @@
-import 'package:cv/features/wheather/domain/model/_model.dart';
+import 'package:cv/features/weather/domain/model/_model.dart';
 import 'package:json_annotation/json_annotation.dart';
-part 'hour_wheather.g.dart';
+part 'hour_weather.g.dart';
 
 @JsonSerializable()
-class HourWheather {
+class HourWeather {
   @JsonKey(name: 'time')
   final DateTime time;
   @JsonKey(name: 'temp_c')
@@ -37,7 +37,7 @@ class HourWheather {
   @JsonKey(name: 'chance_of_snow')
   final int chanceOfSnow;
 
-  HourWheather({
+  HourWeather({
     required this.time,
     required this.temp,
     required this.isDay,
@@ -56,8 +56,8 @@ class HourWheather {
     required this.chanceOfSnow,
   });
 
-  factory HourWheather.fromJson(Map<String, dynamic> json) =>
-      _$HourWheatherFromJson(json);
+  factory HourWeather.fromJson(Map<String, dynamic> json) =>
+      _$HourWeatherFromJson(json);
 
-  Map<String, dynamic> toJson() => _$HourWheatherToJson(this);
+  Map<String, dynamic> toJson() => _$HourWeatherToJson(this);
 }

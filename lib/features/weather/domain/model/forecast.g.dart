@@ -8,7 +8,7 @@ part of 'forecast.dart';
 
 Forecast _$ForecastFromJson(Map<String, dynamic> json) => Forecast(
       forecastday: (json['forecastday'] as List<dynamic>)
-          .map((e) => ForecastDayWheather.fromJson(e as Map<String, dynamic>))
+          .map((e) => ForecastDayWeather.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

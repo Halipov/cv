@@ -1,10 +1,10 @@
-import 'package:cv/features/wheather/domain/model/forecast_day_wheather.dart';
+import 'package:cv/features/weather/domain/model/_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'forecast.g.dart';
 
 @JsonSerializable()
 class Forecast {
-  final List<ForecastDayWheather> forecastday;
+  final List<ForecastDayWeather> forecastday;
 
   Forecast({
     required this.forecastday,

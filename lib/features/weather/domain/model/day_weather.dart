@@ -1,10 +1,10 @@
-import 'package:cv/features/wheather/domain/model/_model.dart';
+import 'package:cv/features/weather/domain/model/_model.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'day_wheather.g.dart';
+part 'day_weather.g.dart';
 
 @JsonSerializable()
-class DayWheather {
+class DayWeather {
   @JsonKey(name: 'maxtemp_c')
   final double maxTemp;
   @JsonKey(name: 'mintemp_c')
@@ -33,7 +33,7 @@ class DayWheather {
   @JsonKey(name: 'uv')
   final double uv;
 
-  DayWheather({
+  DayWeather({
     required this.maxTemp,
     required this.minTemp,
     required this.condtition,
@@ -50,8 +50,8 @@ class DayWheather {
     required this.uv,
   });
 
-  factory DayWheather.fromJson(Map<String, dynamic> json) =>
-      _$DayWheatherFromJson(json);
+  factory DayWeather.fromJson(Map<String, dynamic> json) =>
+      _$DayWeatherFromJson(json);
 
-  Map<String, dynamic> toJson() => _$DayWheatherToJson(this);
+  Map<String, dynamic> toJson() => _$DayWeatherToJson(this);
 }

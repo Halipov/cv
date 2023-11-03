@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'day_wheather.dart';
+part of 'day_weather.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-DayWheather _$DayWheatherFromJson(Map<String, dynamic> json) => DayWheather(
+DayWeather _$DayWeatherFromJson(Map<String, dynamic> json) => DayWeather(
       maxTemp: (json['maxtemp_c'] as num).toDouble(),
       minTemp: (json['mintemp_c'] as num).toDouble(),
       condtition:
@@ -24,7 +24,7 @@ DayWheather _$DayWheatherFromJson(Map<String, dynamic> json) => DayWheather(
       uv: (json['uv'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$DayWheatherToJson(DayWheather instance) =>
+Map<String, dynamic> _$DayWeatherToJson(DayWeather instance) =>
     <String, dynamic>{
       'maxtemp_c': instance.maxTemp,
       'mintemp_c': instance.minTemp,

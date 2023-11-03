@@ -1,9 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'astro_wheather.g.dart';
+part 'astro_weather.g.dart';
 
 @JsonSerializable()
-class AstroWheather {
+class AstroWeather {
   final DateTime sunrise;
   final DateTime sunset;
   final DateTime moonrise;
@@ -13,7 +13,7 @@ class AstroWheather {
   @JsonKey(name: 'moon_illumination')
   final double moonIllumination;
 
-  AstroWheather({
+  AstroWeather({
     required this.sunrise,
     required this.sunset,
     required this.moonrise,
@@ -22,8 +22,8 @@ class AstroWheather {
     required this.moonIllumination,
   });
 
-  factory AstroWheather.fromJson(Map<String, dynamic> json) =>
-      _$AstroWheatherFromJson(json);
+  factory AstroWeather.fromJson(Map<String, dynamic> json) =>
+      _$AstroWeatherFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AstroWheatherToJson(this);
+  Map<String, dynamic> toJson() => _$AstroWeatherToJson(this);
 }

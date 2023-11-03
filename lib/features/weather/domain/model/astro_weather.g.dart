@@ -1,13 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'astro_wheather.dart';
+part of 'astro_weather.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AstroWheather _$AstroWheatherFromJson(Map<String, dynamic> json) =>
-    AstroWheather(
+AstroWeather _$AstroWeatherFromJson(Map<String, dynamic> json) => AstroWeather(
       sunrise: DateTime.parse(json['sunrise'] as String),
       sunset: DateTime.parse(json['sunset'] as String),
       moonrise: DateTime.parse(json['moonrise'] as String),
@@ -16,7 +15,7 @@ AstroWheather _$AstroWheatherFromJson(Map<String, dynamic> json) =>
       moonIllumination: (json['moon_illumination'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$AstroWheatherToJson(AstroWheather instance) =>
+Map<String, dynamic> _$AstroWeatherToJson(AstroWeather instance) =>
     <String, dynamic>{
       'sunrise': instance.sunrise.toIso8601String(),
       'sunset': instance.sunset.toIso8601String(),
