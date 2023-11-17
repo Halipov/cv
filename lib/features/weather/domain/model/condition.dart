@@ -3,19 +3,19 @@ import 'package:json_annotation/json_annotation.dart';
 part 'condition.g.dart';
 
 @JsonSerializable()
-class Condtition {
+class Condition {
   final String text;
   final String icon;
   final int code;
 
-  Condtition({
+  Condition({
     required this.text,
     required this.icon,
     required this.code,
   });
 
-  factory Condtition.fromJson(Map<String, dynamic> json) =>
-      _$CondtitionFromJson(json);
+  factory Condition.fromJson(Map<String, dynamic> json) =>
+      _$ConditionFromJson(json);
 
-  Map<String, dynamic> toJson() => _$CondtitionToJson(this);
+  Map<String, dynamic> toJson() => _$ConditionToJson(this);
 }

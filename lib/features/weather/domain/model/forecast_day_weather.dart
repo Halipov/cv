@@ -8,7 +8,7 @@ class ForecastDayWeather {
   final DateTime date;
   final DayWeather day;
   final AstroWeather astro;
-  final HourWeather hour;
+  final List<HourWeather> hour;
 
   ForecastDayWeather({
     required this.date,

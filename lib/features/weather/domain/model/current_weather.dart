@@ -11,7 +11,7 @@ class CurrentWeather {
   final double temp;
   @JsonKey(name: 'feelslike_c')
   final double feelsLike;
-  final Condtition condition;
+  final Condition condition;
   @JsonKey(name: 'wind_kph')
   final double windSpeed;
   @JsonKey(name: 'wind_dir')

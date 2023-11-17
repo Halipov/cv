@@ -9,7 +9,7 @@ class DayWeather {
   final double maxTemp;
   @JsonKey(name: 'mintemp_c')
   final double minTemp;
-  final Condtition condtition;
+  final Condition condition;
   @JsonKey(name: 'avgtemp_c')
   final double avgTemp;
   @JsonKey(name: 'maxwind_kph')
@@ -36,7 +36,7 @@ class DayWeather {
   DayWeather({
     required this.maxTemp,
     required this.minTemp,
-    required this.condtition,
+    required this.condition,
     required this.avgTemp,
     required this.maxWind,
     required this.totalPrecip,

@@ -11,7 +11,7 @@ CurrentWeather _$CurrentWeatherFromJson(Map<String, dynamic> json) =>
       lastUpdate: DateTime.parse(json['last_updated'] as String),
       temp: (json['temp_c'] as num).toDouble(),
       feelsLike: (json['feelslike_c'] as num).toDouble(),
-      condition: Condtition.fromJson(json['condition'] as Map<String, dynamic>),
+      condition: Condition.fromJson(json['condition'] as Map<String, dynamic>),
       windSpeed: (json['wind_kph'] as num).toDouble(),
       windDirection: json['wind_dir'] as String,
       pressure: (json['pressure_mb'] as num).toDouble(),

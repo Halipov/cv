@@ -9,8 +9,7 @@ part of 'day_weather.dart';
 DayWeather _$DayWeatherFromJson(Map<String, dynamic> json) => DayWeather(
       maxTemp: (json['maxtemp_c'] as num).toDouble(),
       minTemp: (json['mintemp_c'] as num).toDouble(),
-      condtition:
-          Condtition.fromJson(json['condtition'] as Map<String, dynamic>),
+      condition: Condition.fromJson(json['condition'] as Map<String, dynamic>),
       avgTemp: (json['avgtemp_c'] as num).toDouble(),
       maxWind: (json['maxwind_kph'] as num).toDouble(),
       totalPrecip: (json['totalprecip_mm'] as num).toDouble(),
@@ -28,7 +27,7 @@ Map<String, dynamic> _$DayWeatherToJson(DayWeather instance) =>
     <String, dynamic>{
       'maxtemp_c': instance.maxTemp,
       'mintemp_c': instance.minTemp,
-      'condtition': instance.condtition,
+      'condition': instance.condition,
       'avgtemp_c': instance.avgTemp,
       'maxwind_kph': instance.maxWind,
       'totalprecip_mm': instance.totalPrecip,

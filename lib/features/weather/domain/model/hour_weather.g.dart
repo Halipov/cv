@@ -11,8 +11,7 @@ HourWeather _$HourWeatherFromJson(Map<String, dynamic> json) => HourWeather(
       temp: (json['temp_c'] as num).toDouble(),
       isDay: json['is_day'] as int,
       feelsLike: (json['feelslike_c'] as num).toDouble(),
-      condtition:
-          Condtition.fromJson(json['condtition'] as Map<String, dynamic>),
+      condition: Condition.fromJson(json['condition'] as Map<String, dynamic>),
       windSpeed: (json['wind_kph'] as num).toDouble(),
       windDirection: json['wind_dir'] as String,
       pressure: (json['pressure_mb'] as num).toDouble(),
@@ -32,7 +31,7 @@ Map<String, dynamic> _$HourWeatherToJson(HourWeather instance) =>
       'temp_c': instance.temp,
       'is_day': instance.isDay,
       'feelslike_c': instance.feelsLike,
-      'condtition': instance.condtition,
+      'condition': instance.condition,
       'wind_kph': instance.windSpeed,
       'wind_dir': instance.windDirection,
       'pressure_mb': instance.pressure,

@@ -4,10 +4,10 @@ part 'astro_weather.g.dart';
 
 @JsonSerializable()
 class AstroWeather {
-  final DateTime sunrise;
-  final DateTime sunset;
-  final DateTime moonrise;
-  final DateTime moonset;
+  final String sunrise;
+  final String sunset;
+  final String moonrise;
+  final String moonset;
   @JsonKey(name: 'moon_phase')
   final String moonPhase;
   @JsonKey(name: 'moon_illumination')

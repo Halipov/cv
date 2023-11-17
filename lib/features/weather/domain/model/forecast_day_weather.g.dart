@@ -11,7 +11,9 @@ ForecastDayWeather _$ForecastDayWeatherFromJson(Map<String, dynamic> json) =>
       date: DateTime.parse(json['date'] as String),
       day: DayWeather.fromJson(json['day'] as Map<String, dynamic>),
       astro: AstroWeather.fromJson(json['astro'] as Map<String, dynamic>),
-      hour: HourWeather.fromJson(json['hour'] as Map<String, dynamic>),
+      hour: (json['hour'] as List<dynamic>)
+          .map((e) => HourWeather.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$ForecastDayWeatherToJson(ForecastDayWeather instance) =>

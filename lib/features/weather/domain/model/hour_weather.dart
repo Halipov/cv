@@ -12,8 +12,8 @@ class HourWeather {
   final int isDay;
   @JsonKey(name: 'feelslike_c')
   final double feelsLike;
-  @JsonKey(name: 'condtition')
-  final Condtition condtition;
+  @JsonKey(name: 'condition')
+  final Condition condition;
   @JsonKey(name: 'wind_kph')
   final double windSpeed;
   @JsonKey(name: 'wind_dir')
@@ -42,7 +42,7 @@ class HourWeather {
     required this.temp,
     required this.isDay,
     required this.feelsLike,
-    required this.condtition,
+    required this.condition,
     required this.windSpeed,
     required this.windDirection,
     required this.pressure,
