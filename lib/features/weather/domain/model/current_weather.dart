@@ -1,10 +1,11 @@
 import 'package:cv/features/weather/domain/model/_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'current_weather.g.dart';
 
 @JsonSerializable()
-class CurrentWeather {
+class CurrentWeather extends Equatable {
   @JsonKey(name: 'last_updated')
   final DateTime lastUpdate;
   @JsonKey(name: 'temp_c')
@@ -24,7 +25,7 @@ class CurrentWeather {
   final double cloud;
   final double uv;
 
-  CurrentWeather({
+  const CurrentWeather({
     required this.lastUpdate,
     required this.temp,
     required this.feelsLike,
@@ -37,8 +38,22 @@ class CurrentWeather {
     required this.cloud,
     required this.uv,
   });
-  factory CurrentWeather.fromJson(Map<String, dynamic> json) =>
-      _$CurrentWeatherFromJson(json);
+  factory CurrentWeather.fromJson(Map<String, dynamic> json) => _$CurrentWeatherFromJson(json);
 
   Map<String, dynamic> toJson() => _$CurrentWeatherToJson(this);
+
+  @override
+  List<Object?> get props => [
+        lastUpdate,
+        temp,
+        feelsLike,
+        condition,
+        windSpeed,
+        windDirection,
+        pressure,
+        precipitation,
+        humidity,
+        cloud,
+        uv,
+      ];
 }

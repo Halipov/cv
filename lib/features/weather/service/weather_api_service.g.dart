@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'weather_service.dart';
+part of 'weather_api_service.dart';
 
 // **************************************************************************
 // RetrofitGenerator

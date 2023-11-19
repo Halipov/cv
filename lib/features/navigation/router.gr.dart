@@ -18,9 +18,15 @@ abstract class _$AppRouter extends RootStackRouter {
     HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: HomeScreen(),
+        child: const HomeScreen(),
       );
-    }
+    },
+    WeatherRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: WrappedRoute(child: const WeatherScreen()),
+      );
+    },
   };
 }
 
@@ -34,6 +40,20 @@ class HomeRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'HomeRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [WeatherScreen]
+class WeatherRoute extends PageRouteInfo<void> {
+  const WeatherRoute({List<PageRouteInfo>? children})
+      : super(
+          WeatherRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'WeatherRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

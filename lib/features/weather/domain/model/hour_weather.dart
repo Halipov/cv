@@ -1,9 +1,11 @@
 import 'package:cv/features/weather/domain/model/_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
+
 part 'hour_weather.g.dart';
 
 @JsonSerializable()
-class HourWeather {
+class HourWeather extends Equatable {
   @JsonKey(name: 'time')
   final DateTime time;
   @JsonKey(name: 'temp_c')
@@ -37,7 +39,7 @@ class HourWeather {
   @JsonKey(name: 'chance_of_snow')
   final int chanceOfSnow;
 
-  HourWeather({
+  const HourWeather({
     required this.time,
     required this.temp,
     required this.isDay,
@@ -56,8 +58,27 @@ class HourWeather {
     required this.chanceOfSnow,
   });
 
-  factory HourWeather.fromJson(Map<String, dynamic> json) =>
-      _$HourWeatherFromJson(json);
+  factory HourWeather.fromJson(Map<String, dynamic> json) => _$HourWeatherFromJson(json);
 
   Map<String, dynamic> toJson() => _$HourWeatherToJson(this);
+
+  @override
+  List<Object?> get props => [
+        time,
+        temp,
+        isDay,
+        feelsLike,
+        condition,
+        windSpeed,
+        windDirection,
+        pressure,
+        precipitation,
+        humidity,
+        cloud,
+        uv,
+        willItRain,
+        chanceOfRain,
+        willItSnow,
+        chanceOfSnow,
+      ];
 }

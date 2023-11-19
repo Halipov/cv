@@ -1,10 +1,11 @@
 import 'package:cv/features/weather/domain/model/_model.dart';
+import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'day_weather.g.dart';
 
 @JsonSerializable()
-class DayWeather {
+class DayWeather extends Equatable {
   @JsonKey(name: 'maxtemp_c')
   final double maxTemp;
   @JsonKey(name: 'mintemp_c')
@@ -33,7 +34,7 @@ class DayWeather {
   @JsonKey(name: 'uv')
   final double uv;
 
-  DayWeather({
+  const DayWeather({
     required this.maxTemp,
     required this.minTemp,
     required this.condition,
@@ -50,8 +51,25 @@ class DayWeather {
     required this.uv,
   });
 
-  factory DayWeather.fromJson(Map<String, dynamic> json) =>
-      _$DayWeatherFromJson(json);
+  factory DayWeather.fromJson(Map<String, dynamic> json) => _$DayWeatherFromJson(json);
 
   Map<String, dynamic> toJson() => _$DayWeatherToJson(this);
+
+  @override
+  List<Object?> get props => [
+        maxTemp,
+        minTemp,
+        condition,
+        avgTemp,
+        maxWind,
+        totalPrecip,
+        totalSnow,
+        avgVis,
+        avgHumidity,
+        dailyWillItRain,
+        dailyChanceOfRain,
+        dailyWillItSnow,
+        dailyChanceOfSnow,
+        uv,
+      ];
 }

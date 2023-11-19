@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:cv/features/app/di/app_scope.dart';
+import 'package:cv/features/app/di/app_storage.dart';
 import 'package:cv/util/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -20,7 +20,7 @@ void _runApp() {
       await SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
       ]);
-      final scope = AppScope();
+      final scope = AppStorage();
       await scope.initTheme();
       runApp(
         App(
@@ -34,6 +34,5 @@ void _runApp() {
 
 void _initLogger() {
   talker.debug('Talker started');
-  FlutterError.onError =
-      (details) => talker.handle(details.exception, details.stack);
+  FlutterError.onError = (details) => talker.handle(details.exception, details.stack);
 }

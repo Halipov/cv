@@ -2,11 +2,12 @@ import 'package:cv/config/environment/environment.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/navigation/router.dart';
 import 'package:cv/persistence/storage/theme_storage/theme_storage.dart';
+import 'package:cv/util/logger.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_dio_logger/talker_dio_logger.dart';
 
-abstract class IAppScope {
+abstract class IAppStorage {
   Dio get dio;
   VoidCallback get applicationRebuilder;
   AppRouter get router;
@@ -14,7 +15,7 @@ abstract class IAppScope {
   Future<void> initTheme();
 }
 
-class AppScope implements IAppScope {
+class AppStorage implements IAppStorage {
   static const _themeByDefault = ThemeMode.system;
 
   late final Dio _dio;
@@ -35,7 +36,7 @@ class AppScope implements IAppScope {
 
   late IThemeModeStorage _themeModeStorage;
 
-  AppScope() {
+  AppStorage() {
     final additionalInterceptors = <Interceptor>[];
     _dio = _initDio(additionalInterceptors);
     _router = AppRouter.instance();
@@ -44,8 +45,7 @@ class AppScope implements IAppScope {
 
   @override
   Future<void> initTheme() async {
-    final theme =
-        await ThemeModeStorageImpl().getThemeMode() ?? _themeByDefault;
+    final theme = await ThemeModeStorageImpl().getThemeMode() ?? _themeByDefault;
     _themeService = ThemeServiceImpl(theme);
     _themeService.addListener(_onThemeModeChanged);
   }
@@ -65,6 +65,7 @@ class AppScope implements IAppScope {
     if (Environment.instance().isDebug) {
       dio.interceptors.add(
         TalkerDioLogger(
+          talker: talker,
           settings: const TalkerDioLoggerSettings(
             printRequestHeaders: true,
             printResponseHeaders: true,

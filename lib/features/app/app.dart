@@ -1,13 +1,13 @@
 import 'package:cv/assets/themes/theme_data.dart';
-import 'package:cv/features/app/di/app_scope.dart';
+import 'package:cv/features/app/di/app_storage.dart';
 import 'package:cv/features/common/theme_service.dart';
-import 'package:cv/features/common/widgets/di_scope/di_scope.dart';
+import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
 import 'package:cv/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class App extends StatefulWidget {
-  final AppScope appScope;
+  final AppStorage appScope;
 
   const App({
     super.key,
@@ -19,7 +19,7 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
-  late IAppScope _scope;
+  late IAppStorage _scope;
   late IThemeService _themeService;
 
   @override
@@ -38,11 +38,8 @@ class _AppState extends State<App> {
 
   @override
   Widget build(BuildContext context) {
-    return DiScope<IAppScope>(
-      key: ObjectKey(_scope),
-      factory: () {
-        return _scope;
-      },
+    return AppScope(
+      create: (context) => _scope,
       child: AnimatedBuilder(
         animation: _themeService,
         builder: (context, child) => MaterialApp.router(
