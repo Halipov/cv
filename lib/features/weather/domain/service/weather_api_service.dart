@@ -1,5 +1,5 @@
 import 'package:cv/features/weather/domain/model/_model.dart';
-import 'package:cv/features/weather/service/weather_service.dart';
+import 'package:cv/features/weather/domain/service/weather_service.dart';
 import 'package:dio/dio.dart' hide Headers;
 import 'package:retrofit/retrofit.dart';
 

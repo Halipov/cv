@@ -2,11 +2,8 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cv/features/common/widgets/base/_base.dart';
 import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
-import 'package:cv/features/weather/di/weather_repository_storage.dart';
-import 'package:cv/features/weather/di/weather_service_storage.dart';
+import 'package:cv/features/weather/di/_di_storages.dart';
 import 'package:cv/features/weather/ui/widgets/_widgets.dart';
-import 'package:cv/features/weather/ui/widgets/di/weather_repository_scope.dart';
-import 'package:cv/features/weather/ui/widgets/di/weather_service_scope.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

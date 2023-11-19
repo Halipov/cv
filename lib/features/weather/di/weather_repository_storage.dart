@@ -1,5 +1,4 @@
-import 'package:cv/features/weather/domain/repository/weather_repository.dart';
-import 'package:cv/features/weather/service/weather_service.dart';
+import 'package:cv/features/weather/domain/_domain.dart';
 
 abstract interface class IWeatherRepositoryStorage {
   IWeatherRepository get weatherRepository;

@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cv/features/home/screens/home_screen.dart';
+import 'package:cv/features/home/home_screen.dart';
 import 'package:cv/features/weather/ui/weather_screen.dart';
 
 part 'router.gr.dart';

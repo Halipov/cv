@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:cv/features/weather/service/weather_api_service.dart';
-import 'package:cv/features/weather/service/weather_service.dart';
+import 'package:cv/features/weather/domain/_domain.dart';
 import 'package:dio/dio.dart';
 
 abstract interface class IWeatherServiceStorage {
