@@ -1,8 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:cv/features/common/widgets/base/_base.dart';
 import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
 import 'package:cv/features/weather/di/_di_storages.dart';
+import 'package:cv/features/weather/domain/_domain.dart';
+import 'package:cv/features/weather/ui/pages/_pages.dart';
 import 'package:cv/features/weather/ui/widgets/_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,10 +26,12 @@ class WeatherScreen extends StatefulWidget implements AutoRouteWrapper {
           weatherService: WeatherServiceScope.of(context).weatherService,
         ),
         child: BlocProvider<WeatherBloc>(
-          lazy: false,
           create: (context) => WeatherBloc(
+            themeService: AppScope.of(context).themeService,
             weatherRepository: WeatherRepositoryScope.of(context).weatherRepository,
-          )..add(FetchWeatherEvent()),
+          )..add(
+              FetchWeatherEvent(city: City.london()),
+            ),
           child: this,
         ),
       ),
@@ -36,13 +39,13 @@ class WeatherScreen extends StatefulWidget implements AutoRouteWrapper {
   }
 }
 
+final GlobalKey<ScaffoldState> globalScaffoldkey = GlobalKey<ScaffoldState>();
+
 class _WeatherScreenState extends State<WeatherScreen> {
-  late ScrollController controller;
-  late ValueNotifier isAnimating;
+  final ScrollController controller = ScrollController();
+  final ValueNotifier isAnimating = ValueNotifier(false);
   @override
   void initState() {
-    controller = ScrollController();
-    isAnimating = ValueNotifier(false);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       controller.position.isScrollingNotifier.addListener(_scrollListener);
     });
@@ -52,6 +55,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
 
   @override
   void dispose() {
+    controller.dispose();
     super.dispose();
   }
 
@@ -73,179 +77,15 @@ class _WeatherScreenState extends State<WeatherScreen> {
               delegate: CustomHeaderDelegate(),
             ),
           ],
-          body: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 16,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const Row(
-                    children: [
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.air,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.cloud,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const Row(
-                    children: [
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.waves,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.sunny,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  BaseContainer(
-                    child: Column(
-                      children: [
-                        const Row(
-                          children: [
-                            BaseIcon(
-                              icon: Icons.timer_outlined,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text('Hourly forecast')
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(maxHeight: 100),
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 20,
-                            itemBuilder: (context, index) {
-                              return const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Now'),
-                                    BaseIcon(icon: Icons.sunny),
-                                    Text('10'),
-                                  ],
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  BaseContainer(
-                    child: Column(
-                      children: [
-                        const Row(
-                          children: [
-                            BaseIcon(
-                              icon: Icons.calendar_today,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text('Day forecast')
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        ConstrainedBox(
-                          constraints: const BoxConstraints(
-                            maxHeight: 170,
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.only(right: 20, left: 8, top: 16, bottom: 8),
-                            child: ChartWidget(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const BaseContainer(
-                    child: Column(
-                      children: [
-                        Row(
-                          children: [
-                            BaseIcon(
-                              icon: Icons.calendar_today,
-                            ),
-                            SizedBox(
-                              width: 8,
-                            ),
-                            Text('Day forecast')
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        ProgressBarTile(),
-                        ProgressBarTile(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 16,
-                  ),
-                  const Row(
-                    children: [
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.waves,
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      SmallCardWidget(
-                        title: 'Wind speed',
-                        value: '12 km/h',
-                        icon: Icons.sunny,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
+          body: BlocBuilder<WeatherBloc, WeatherState>(
+            builder: (context, state) => switch (state) {
+              WeatherLoading() => const Center(
+                  child: CircularProgressIndicator(),
+                ),
+              WeatherLoaded() => WeatherView(
+                  weather: state.weather,
+                ),
+            },
           ),
         ),
       ),
@@ -253,9 +93,9 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   void _scrollListener() {
-    if (!controller.position.isScrollingNotifier.value && isAnimating.value && controller.offset < 200) {
+    if (!controller.position.isScrollingNotifier.value && isAnimating.value && controller.offset < 215) {
       isAnimating.value = !isAnimating.value;
-      if (controller.offset < 100) {
+      if (controller.offset < 150) {
         controller
             .animateTo(
               0,
@@ -275,5 +115,33 @@ class _WeatherScreenState extends State<WeatherScreen> {
     } else {
       isAnimating.value = !isAnimating.value;
     }
+  }
+}
+
+class WeatherView extends StatelessWidget {
+  final Weather weather;
+  const WeatherView({
+    super.key,
+    required this.weather,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final currentWeather = weather.forecast.forecastday.first;
+    final hourlyForecastList = currentWeather.hour
+        .where(
+          (e) => e.time.hour >= DateTime.now().hour,
+        )
+        .toList();
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 16,
+      ),
+      child: WeatherTodayPage(
+        weather: weather,
+        currentWeather: currentWeather,
+        hourlyForecastList: hourlyForecastList,
+      ),
+    );
   }
 }

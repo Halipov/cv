@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 abstract class DarkColorPalette {
-  static const Color hanPurple = Color(0xFF6D38FF);
-  static const Color inchworm = Color(0xFFC6FF57);
+  static const Color blue = Colors.blue;
+  static const Color inchworm = Colors.blueAccent;
   static const Color maroon = Color(0xFF7B0008);
   static const Color brinkPink = Color(0xFFFF607D);
   static const Color raisinBlack = Color(0xFF222222);

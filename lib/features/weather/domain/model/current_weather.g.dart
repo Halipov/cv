@@ -11,6 +11,7 @@ CurrentWeather _$CurrentWeatherFromJson(Map<String, dynamic> json) =>
       lastUpdate: DateTime.parse(json['last_updated'] as String),
       temp: (json['temp_c'] as num).toDouble(),
       feelsLike: (json['feelslike_c'] as num).toDouble(),
+      isDay: const IsDayConverter().fromJson(json['is_day'] as int),
       condition: Condition.fromJson(json['condition'] as Map<String, dynamic>),
       windSpeed: (json['wind_kph'] as num).toDouble(),
       windDirection: json['wind_dir'] as String,
@@ -25,6 +26,7 @@ Map<String, dynamic> _$CurrentWeatherToJson(CurrentWeather instance) =>
     <String, dynamic>{
       'last_updated': instance.lastUpdate.toIso8601String(),
       'temp_c': instance.temp,
+      'is_day': const IsDayConverter().toJson(instance.isDay),
       'feelslike_c': instance.feelsLike,
       'condition': instance.condition,
       'wind_kph': instance.windSpeed,

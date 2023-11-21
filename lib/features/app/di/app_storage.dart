@@ -69,7 +69,8 @@ class AppStorage implements IAppStorage {
           settings: const TalkerDioLoggerSettings(
             printRequestHeaders: true,
             printResponseHeaders: true,
-            printResponseMessage: true,
+            printResponseMessage: false,
+            printResponseData: false,
           ),
         ),
       );

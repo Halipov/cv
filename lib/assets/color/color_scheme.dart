@@ -157,13 +157,13 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
 
   /// Base dark theme version.
   AppColorScheme.dark()
-      : primary = DarkColorPalette.hanPurple,
+      : primary = DarkColorPalette.blue,
         onPrimary = DarkColorPalette.white,
         secondary = DarkColorPalette.inchworm,
         onSecondary = DarkColorPalette.black,
         surface = DarkColorPalette.white,
         surfaceSecondary = DarkColorPalette.raisinBlack,
-        onSurface = DarkColorPalette.black,
+        onSurface = DarkColorPalette.white,
         background = DarkColorPalette.raisinBlack,
         backgroundSecondary = DarkColorPalette.maroon,
         backgroundTertiary = DarkColorPalette.raisinBlack,

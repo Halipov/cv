@@ -27,7 +27,10 @@ class SmallCardWidget extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(title),
+                  Text(
+                    title,
+                    style: const TextStyle(),
+                  ),
                   const SizedBox(height: 10),
                   Text(value),
                 ],

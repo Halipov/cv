@@ -1,7 +1,11 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cv/assets/color/color_scheme.dart';
+import 'package:cv/features/weather/bloc/weather_bloc.dart';
 import 'package:cv/features/weather/domain/model/_model.dart';
+import 'package:cv/features/weather/ui/widgets/custom_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   CustomHeaderDelegate();
@@ -28,154 +32,18 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
               height: maxExtent - shrinkOffset,
               child: Column(
                 children: [
-                  Expanded(
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: const NetworkImage(
-                              'https://img.freepik.com/free-photo/mountain-forest-landscape-in-autumn-multi-colored-backdrop-generated-by-ai_188544-19704.jpg?size=626&ext=jpg&ga=GA1.1.672697106.1697846400&semt=ais'),
-                          fit: BoxFit.none,
-                          opacity: 1 - progress,
+                  BlocBuilder<WeatherBloc, WeatherState>(
+                    builder: (context, state) => switch (state) {
+                      WeatherLoading() => const Expanded(
+                          child: Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
-                        borderRadius: const BorderRadius.vertical(
-                          bottom: Radius.circular(30),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 23,
-                        ).copyWith(
-                          top: 16,
-                        ),
-                        child: Stack(
-                          children: [
-                            const SizedBox(
-                              height: 40,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                top: 30,
-                              ),
-                              child: Row(
-                                children: [
-                                  Text(
-                                    weather.location.name,
-                                    style: TextStyle(
-                                      color: Color.lerp(
-                                        Colors.white,
-                                        Colors.black,
-                                        progress,
-                                      ),
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                  const Spacer(),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(
-                                      Icons.search,
-                                      color: Color.lerp(
-                                        Colors.white,
-                                        Colors.black,
-                                        progress,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 40.0),
-                              child: Stack(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(
-                                        top: 30,
-                                      ),
-                                      child: Row(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
-                                        children: [
-                                          Text(
-                                            '${weather.current.temp.toInt()}°',
-                                            style: TextStyle.lerp(
-                                              const TextStyle(
-                                                fontSize: 100,
-                                                color: Colors.white,
-                                              ),
-                                              const TextStyle(
-                                                fontSize: 40,
-                                                color: Colors.black,
-                                              ),
-                                              progress,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding: EdgeInsets.lerp(
-                                              const EdgeInsets.only(bottom: 20),
-                                              const EdgeInsets.only(bottom: 4),
-                                              progress,
-                                            )!,
-                                            child: Text(
-                                              'Feels like ${weather.current.temp}°',
-                                              style: TextStyle.lerp(
-                                                const TextStyle(
-                                                  fontSize: 16,
-                                                  color: Colors.white,
-                                                ),
-                                                const TextStyle(
-                                                  fontSize: 12,
-                                                  color: Colors.black,
-                                                ),
-                                                progress,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding: EdgeInsets.lerp(
-                                        const EdgeInsets.only(bottom: 20),
-                                        const EdgeInsets.only(top: 30),
-                                        progress,
-                                      )!,
-                                      child: Icon(
-                                        Icons.sunny,
-                                        size: 130 - 90 * progress,
-                                        color: Color.lerp(
-                                          Colors.white,
-                                          Colors.black,
-                                          progress,
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            // const Align(
-                            //   alignment: Alignment.centerRight,
-                            //   child: Text('Day'),
-                            // ),
-                            // const Spacer(),
-                            // Align(
-                            //   alignment: Alignment.bottomLeft,
-                            //   child: Text(
-                            //     DateFormat('MMMM d, hh:mm').format(weather.current.lastUpdate),
-                            //   ),
-                            // ),
-                            // const SizedBox(
-                            //   height: 15,
-                            // ),
-                          ],
-                        ),
-                      ),
-                    ),
+                      WeatherLoaded() => ExpandedAppBar(
+                          weather: state.weather,
+                          progress: progress,
+                        )
+                    },
                   ),
                   const SizedBox(
                     height: 16,
@@ -197,27 +65,6 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
               ),
             ),
           ),
-          // AnimatedContainer(
-          //   duration: const Duration(milliseconds: 100),
-          //   padding: EdgeInsets.lerp(
-          //     const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          //     const EdgeInsets.only(bottom: 16),
-          //     progress,
-          //   ),
-          //   alignment: Alignment.lerp(
-          //     Alignment.bottomLeft,
-          //     Alignment.bottomRight,
-          //     progress,
-          //   ),
-          //   child: Text(
-          //     'Mountains',
-          //     style: TextStyle.lerp(
-          //       const TextStyle(color: Colors.green),
-          //       const TextStyle(color: Colors.white),
-          //       progress,
-          //     ),
-          //   ),
-          // ),
         ],
       ),
     );
@@ -230,10 +77,10 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   FloatingHeaderSnapConfiguration? get snapConfiguration => FloatingHeaderSnapConfiguration();
 
   @override
-  double get maxExtent => 400;
+  double get maxExtent => 430;
 
   @override
-  double get minExtent => 200;
+  double get minExtent => 230;
 
   @override
   bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
@@ -276,27 +123,135 @@ class ForecastButton extends StatelessWidget {
   }
 }
 
-final weather = Weather(
-  location: Location(
-    name: 'Minsk',
-    region: 'region',
-    country: 'country',
-    localtime: DateTime.now(),
-  ),
-  current: CurrentWeather(
-    lastUpdate: DateTime.now(),
-    temp: 5,
-    feelsLike: 5,
-    condition: Condition(text: 'text', icon: '', code: 2),
-    windSpeed: 5,
-    windDirection: 'w',
-    pressure: 2,
-    precipitation: 2,
-    humidity: 2,
-    cloud: 2,
-    uv: 2,
-  ),
-  forecast: Forecast(
-    forecastday: [],
-  ),
-);
+class ExpandedAppBar extends StatelessWidget {
+  final Weather weather;
+  final double progress;
+  const ExpandedAppBar({super.key, required this.weather, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: weather.current.isDay
+                ? const AssetImage('assets/day_background.jpg')
+                : const AssetImage('assets/night_background.jpg'),
+            fit: BoxFit.none,
+            opacity: 1 - progress,
+          ),
+          borderRadius: const BorderRadius.vertical(
+            bottom: Radius.circular(30),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+            horizontal: 23,
+          ).copyWith(
+            top: 16,
+          ),
+          child: Stack(
+            children: [
+              const SizedBox(
+                height: 40,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 50,
+                ),
+                child: CustomSearchBar(
+                    initialQuery: weather.location.name,
+                    color: Color.lerp(
+                      Colors.white.withOpacity(0.9),
+                      AppColorScheme.of(context).onSurface,
+                      progress,
+                    )!,
+                    onComplete: (city) {
+                      BlocProvider.of<WeatherBloc>(context).add(
+                        FetchWeatherEvent(
+                          city: city,
+                        ),
+                      );
+                    }),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 40.0),
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Padding(
+                        padding: EdgeInsets.lerp(
+                          const EdgeInsets.only(bottom: 20),
+                          const EdgeInsets.only(top: 40),
+                          progress,
+                        )!,
+                        child: Row(
+                          children: [
+                            Text(
+                              '${weather.current.temp.toInt()}°',
+                              style: TextStyle.lerp(
+                                TextStyle(
+                                  fontSize: 100,
+                                  color: Colors.white.withOpacity(0.8),
+                                ),
+                                TextStyle(
+                                  fontSize: 40,
+                                  color: AppColorScheme.of(context).onSurface,
+                                ),
+                                progress,
+                              ),
+                            ),
+                            const Spacer(),
+                            Image.network(
+                              'https:${weather.current.condition.icon}',
+                              scale: 0.5,
+                              filterQuality: FilterQuality.high,
+                              height: 150 - 70 * progress,
+                              width: 150 - 70 * progress,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.lerp(
+                        Alignment.bottomCenter,
+                        Alignment.bottomLeft,
+                        progress,
+                      )!,
+                      child: Padding(
+                        padding: EdgeInsets.lerp(
+                          const EdgeInsets.only(bottom: 20),
+                          const EdgeInsets.only(
+                            bottom: 15,
+                            left: 60,
+                          ),
+                          progress,
+                        )!,
+                        child: Text(
+                          'Feels like ${weather.current.feelsLike}°',
+                          style: TextStyle.lerp(
+                            const TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                            ),
+                            TextStyle(
+                              fontSize: 12,
+                              color: AppColorScheme.of(context).onSurface,
+                            ),
+                            progress,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}

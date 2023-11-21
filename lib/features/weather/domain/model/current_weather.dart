@@ -10,6 +10,11 @@ class CurrentWeather extends Equatable {
   final DateTime lastUpdate;
   @JsonKey(name: 'temp_c')
   final double temp;
+  @IsDayConverter()
+  @JsonKey(
+    name: 'is_day',
+  )
+  final bool isDay;
   @JsonKey(name: 'feelslike_c')
   final double feelsLike;
   final Condition condition;
@@ -29,6 +34,7 @@ class CurrentWeather extends Equatable {
     required this.lastUpdate,
     required this.temp,
     required this.feelsLike,
+    required this.isDay,
     required this.condition,
     required this.windSpeed,
     required this.windDirection,
@@ -56,4 +62,14 @@ class CurrentWeather extends Equatable {
         cloud,
         uv,
       ];
+}
+
+class IsDayConverter implements JsonConverter<bool, int> {
+  const IsDayConverter();
+
+  @override
+  bool fromJson(int json) => json == 1;
+
+  @override
+  int toJson(bool object) => object ? 1 : 0;
 }

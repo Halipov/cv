@@ -19,4 +19,14 @@ abstract class WeatherApiService implements IWeatherService {
     @Query('days') int days, {
     @Query('key') String key = 'f8b4cb851e6e4d3095c155416232610',
   });
+
+  @override
+  @GET('/search.json')
+  @Headers(<String, dynamic>{
+    'Content-Type': 'application/json',
+  })
+  Future<List<City>> searchCity(
+    @Query('q') String query, {
+    @Query('key') String key = 'f8b4cb851e6e4d3095c155416232610',
+  });
 }

@@ -1,3 +1,4 @@
+import 'package:cv/assets/color/color_scheme.dart';
 import 'package:cv/assets/text/text_style.dart';
 import 'package:flutter/material.dart';
 
@@ -30,10 +31,21 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
     required this.bold16,
   });
 
-  /// Base app text theme.
-  AppTextTheme.base()
+  AppTextTheme.light()
       : regular14 = AppTextStyle.regular14.value,
         regular16 = AppTextStyle.regular16.value,
+        medium14 = AppTextStyle.medium14.value,
+        medium16 = AppTextStyle.medium16.value,
+        bold14 = AppTextStyle.bold14.value,
+        bold16 = AppTextStyle.bold16.value;
+
+  AppTextTheme.dark()
+      : regular14 = TextStyle(
+          color: AppColorScheme.dark().surface,
+        ),
+        regular16 = TextStyle(
+          color: AppColorScheme.dark().surface,
+        ),
         medium14 = AppTextStyle.medium14.value,
         medium16 = AppTextStyle.medium16.value,
         bold14 = AppTextStyle.bold14.value,
@@ -60,8 +72,7 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
 
   /// Return text theme for app from context.
   static AppTextTheme of(BuildContext context) {
-    return Theme.of(context).extension<AppTextTheme>() ??
-        _throwThemeExceptionFromFunc(context);
+    return Theme.of(context).extension<AppTextTheme>() ?? _throwThemeExceptionFromFunc(context);
   }
 
   /// @nodoc.
@@ -85,5 +96,4 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
   }
 }
 
-Never _throwThemeExceptionFromFunc(BuildContext context) =>
-    throw Exception('$AppTextTheme не найдена в $context');
+Never _throwThemeExceptionFromFunc(BuildContext context) => throw Exception('$AppTextTheme не найдена в $context');

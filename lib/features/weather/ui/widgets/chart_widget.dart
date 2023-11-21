@@ -1,9 +1,14 @@
+import 'package:cv/assets/color/color_scheme.dart';
+import 'package:cv/features/weather/domain/model/forecast_day_weather.dart';
+import 'package:cv/util/extensions/date_helpers.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 
 class ChartWidget extends StatelessWidget {
+  final List<ForecastDayWeather> forecastDayWeatherList;
   const ChartWidget({
     super.key,
+    required this.forecastDayWeatherList,
   });
 
   @override
@@ -85,16 +90,8 @@ class ChartWidget extends StatelessWidget {
         maxY: 10,
         lineBarsData: [
           LineChartBarData(
-            color: Colors.black,
-            spots: const [
-              FlSpot(1, -1),
-              FlSpot(2, 2),
-              FlSpot(3, 3),
-              FlSpot(4, 3),
-              FlSpot(5, 3),
-              FlSpot(6, 3),
-              FlSpot(7, 3),
-            ],
+            color: AppColorScheme.of(context).onSurface,
+            spots: getSeries(forecastDayWeatherList),
             isCurved: true,
             barWidth: 2,
             isStrokeCapRound: true,
@@ -107,8 +104,8 @@ class ChartWidget extends StatelessWidget {
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
                 colors: [
-                  Colors.deepPurple.withOpacity(0.3),
-                  Colors.deepPurple.withOpacity(0.1),
+                  AppColorScheme.of(context).primary.withOpacity(0.3),
+                  AppColorScheme.of(context).primary.withOpacity(0.3),
                   Colors.transparent,
                   Colors.transparent,
                 ],
@@ -121,41 +118,23 @@ class ChartWidget extends StatelessWidget {
   }
 }
 
-Widget bottomTitleWidgets(double value, TitleMeta meta) {
-  const style = TextStyle(
-    fontSize: 15,
-  );
-  Widget text;
-  switch (value.toInt()) {
-    case 1:
-      text = const Text('Mon', style: style);
-      break;
-    case 2:
-      text = const Text('Tue', style: style);
-      break;
-    case 3:
-      text = const Text('Wen', style: style);
-      break;
-    case 4:
-      text = const Text('Thu', style: style);
-      break;
-    case 5:
-      text = const Text('Fri', style: style);
-      break;
-    case 6:
-      text = const Text('Sat', style: style);
-      break;
-    case 7:
-      text = const Text('Sun', style: style);
-      break;
-    default:
-      text = const Text('', style: style);
-      break;
-  }
+List<FlSpot> getSeries(List<ForecastDayWeather> list) {
+  return list.map((e) => FlSpot(e.date.weekday.toDouble(), e.day.avgTemp)).toList();
+}
 
+Widget bottomTitleWidgets(double value, TitleMeta meta) {
+  final now = DateTime.now()
+      .subtract(
+        const Duration(days: 1),
+      )
+      .add(
+        Duration(
+          days: value.toInt(),
+        ),
+      );
   return SideTitleWidget(
     space: 14,
     axisSide: AxisSide.bottom,
-    child: text,
+    child: Text(now.getWeekDayName),
   );
 }

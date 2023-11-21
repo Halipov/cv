@@ -1,3 +1,4 @@
+import 'package:cv/assets/color/color_scheme.dart';
 import 'package:flutter/material.dart';
 
 class BaseIcon extends StatelessWidget {
@@ -9,8 +10,8 @@ class BaseIcon extends StatelessWidget {
     return Container(
       height: 28,
       width: 28,
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: AppColorScheme.of(context).primary.withOpacity(0.4),
         shape: BoxShape.circle,
       ),
       child: Icon(

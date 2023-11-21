@@ -1,8 +1,15 @@
+import 'package:cv/assets/color/color_scheme.dart';
+import 'package:cv/util/extensions/date_helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ProgressBarTile extends StatelessWidget {
+  final DateTime date;
+  final int persantage;
   const ProgressBarTile({
     super.key,
+    required this.date,
+    required this.persantage,
   });
 
   @override
@@ -11,23 +18,23 @@ class ProgressBarTile extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Row(
         children: [
-          const Expanded(
+          Expanded(
               child: Text(
-            '7 PM',
+            date.isNow ? 'Now' : DateFormat('hh a').format(date),
             textAlign: TextAlign.center,
           )),
           SizedBox(
             width: 230,
             child: LinearProgressIndicator(
               minHeight: 25,
-              value: 0.5,
-              color: Colors.purple,
+              value: persantage / 100,
+              color: AppColorScheme.of(context).primary,
               borderRadius: BorderRadius.circular(20),
             ),
           ),
-          const Expanded(
+          Expanded(
               child: Text(
-            '7 PM',
+            '$persantage%',
             textAlign: TextAlign.center,
           )),
         ],

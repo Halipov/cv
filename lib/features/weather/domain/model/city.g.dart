@@ -1,22 +1,23 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'location.dart';
+part of 'city.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Location _$LocationFromJson(Map<String, dynamic> json) => Location(
+City _$CityFromJson(Map<String, dynamic> json) => City(
       name: json['name'] as String,
       region: json['region'] as String,
       country: json['country'] as String,
-      localtime:
-          const LocalTimeConverter().fromJson(json['localtime'] as String),
+      lat: (json['lat'] as num).toDouble(),
+      lon: (json['lon'] as num).toDouble(),
     );
 
-Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
+Map<String, dynamic> _$CityToJson(City instance) => <String, dynamic>{
       'name': instance.name,
       'region': instance.region,
       'country': instance.country,
-      'localtime': const LocalTimeConverter().toJson(instance.localtime),
+      'lat': instance.lat,
+      'lon': instance.lon,
     };

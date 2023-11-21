@@ -7,4 +7,8 @@ sealed class WeatherEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchWeatherEvent extends WeatherEvent {}
+class FetchWeatherEvent extends WeatherEvent {
+  final City city;
+
+  const FetchWeatherEvent({required this.city});
+}

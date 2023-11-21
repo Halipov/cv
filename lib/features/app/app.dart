@@ -46,6 +46,7 @@ class _AppState extends State<App> {
           /// Theme
           theme: AppThemeData.lightTheme,
           darkTheme: AppThemeData.darkTheme,
+          themeMode: _scope.themeService.currentThemeMode,
 
           /// Localization.
           locale: _localizations.first,

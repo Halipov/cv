@@ -34,7 +34,7 @@ abstract class AppThemeData {
       ),
     ),
     scaffoldBackgroundColor: _lightColorScheme.background,
-    extensions: [_lightColorScheme, _textTheme],
+    extensions: [_lightColorScheme, _lightTextTheme],
   );
 
   /// Dark theme configuration.
@@ -67,10 +67,11 @@ abstract class AppThemeData {
       ),
     ),
     scaffoldBackgroundColor: _darkColorScheme.background,
-    extensions: [_darkColorScheme, _textTheme],
+    extensions: [_darkColorScheme, _darkTextTheme],
   );
 
   static final _lightColorScheme = AppColorScheme.light();
   static final _darkColorScheme = AppColorScheme.dark();
-  static final _textTheme = AppTextTheme.base();
+  static final _lightTextTheme = AppTextTheme.light();
+  static final _darkTextTheme = AppTextTheme.dark();
 }
