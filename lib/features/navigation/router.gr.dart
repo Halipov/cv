@@ -27,6 +27,24 @@ abstract class _$AppRouter extends RootStackRouter {
         child: WrappedRoute(child: const WeatherScreen()),
       );
     },
+    TodayTab.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TodayPage(),
+      );
+    },
+    TommorowTab.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const TommorowPage(),
+      );
+    },
+    ForecastTab.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const ForecastPage(),
+      );
+    },
   };
 }
 
@@ -54,6 +72,48 @@ class WeatherRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'WeatherRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TodayPage]
+class TodayTab extends PageRouteInfo<void> {
+  const TodayTab({List<PageRouteInfo>? children})
+      : super(
+          TodayTab.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TodayTab';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [TommorowPage]
+class TommorowTab extends PageRouteInfo<void> {
+  const TommorowTab({List<PageRouteInfo>? children})
+      : super(
+          TommorowTab.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'TommorowTab';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [ForecastPage]
+class ForecastTab extends PageRouteInfo<void> {
+  const ForecastTab({List<PageRouteInfo>? children})
+      : super(
+          ForecastTab.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'ForecastTab';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

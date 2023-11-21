@@ -1,10 +1,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
+import 'package:cv/features/navigation/router.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
 import 'package:cv/features/weather/di/_di_storages.dart';
 import 'package:cv/features/weather/domain/_domain.dart';
-import 'package:cv/features/weather/ui/pages/_pages.dart';
 import 'package:cv/features/weather/ui/widgets/_widgets.dart';
+import 'package:cv/util/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -68,25 +69,38 @@ class _WeatherScreenState extends State<WeatherScreen> {
           ignoring: value,
           child: child,
         ),
-        child: NestedScrollView(
-          controller: controller,
-          headerSliverBuilder: (context, innerBoxIsScrolled) => [
-            SliverPersistentHeader(
-              pinned: true,
-              floating: false,
-              delegate: CustomHeaderDelegate(),
-            ),
+        child: AutoTabsRouter.tabBar(
+          routes: const [
+            TodayTab(),
+            TommorowTab(),
+            ForecastTab(),
           ],
-          body: BlocBuilder<WeatherBloc, WeatherState>(
-            builder: (context, state) => switch (state) {
-              WeatherLoading() => const Center(
-                  child: CircularProgressIndicator(),
+          builder: (context, child, tabController) {
+            talker.info(tabController.index);
+            return NestedScrollView(
+              controller: controller,
+              headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                SliverPersistentHeader(
+                  pinned: true,
+                  floating: false,
+                  delegate: CustomHeaderDelegate(
+                    tabsController: tabController,
+                  ),
                 ),
-              WeatherLoaded() => WeatherView(
-                  weather: state.weather,
+              ],
+              body: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: BlocBuilder<WeatherBloc, WeatherState>(
+                  builder: (context, state) => switch (state) {
+                    WeatherLoading() => const Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    WeatherLoaded() => child,
+                  },
                 ),
-            },
-          ),
+              ),
+            );
+          },
         ),
       ),
     );
@@ -115,33 +129,5 @@ class _WeatherScreenState extends State<WeatherScreen> {
     } else {
       isAnimating.value = !isAnimating.value;
     }
-  }
-}
-
-class WeatherView extends StatelessWidget {
-  final Weather weather;
-  const WeatherView({
-    super.key,
-    required this.weather,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final currentWeather = weather.forecast.forecastday.first;
-    final hourlyForecastList = currentWeather.hour
-        .where(
-          (e) => e.time.hour >= DateTime.now().hour,
-        )
-        .toList();
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16,
-      ),
-      child: WeatherTodayPage(
-        weather: weather,
-        currentWeather: currentWeather,
-        hourlyForecastList: hourlyForecastList,
-      ),
-    );
   }
 }

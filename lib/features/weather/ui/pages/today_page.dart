@@ -1,22 +1,44 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:cv/features/common/widgets/base/_base.dart';
+import 'package:cv/features/weather/bloc/weather_bloc.dart';
 import 'package:cv/features/weather/domain/_domain.dart';
 import 'package:cv/features/weather/ui/widgets/_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class WeatherTodayPage extends StatelessWidget {
-  const WeatherTodayPage({
+@RoutePage(name: 'TodayTab')
+class TodayPage extends StatelessWidget {
+  const TodayPage({
     super.key,
-    required this.weather,
-    required this.currentWeather,
-    required this.hourlyForecastList,
   });
-
-  final Weather weather;
-  final ForecastDayWeather currentWeather;
-  final List<HourWeather> hourlyForecastList;
 
   @override
   Widget build(BuildContext context) {
+    return BlocBuilder<WeatherBloc, WeatherState>(
+      builder: (context, state) => switch (state) {
+        WeatherLoading() => const Center(
+            child: CircularProgressIndicator(),
+          ),
+        WeatherLoaded() => _TodayLoadedView(weather: state.weather),
+      },
+    );
+  }
+}
+
+class _TodayLoadedView extends StatelessWidget {
+  final Weather weather;
+  const _TodayLoadedView({
+    required this.weather,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final currentWeather = weather.forecast.forecastday.first;
+    final hourlyForecastList = currentWeather.hour
+        .where(
+          (e) => e.time.hour >= DateTime.now().hour,
+        )
+        .toList();
     return SingleChildScrollView(
       child: Column(
         children: [

@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/features/home/home_screen.dart';
+import 'package:cv/features/weather/ui/pages/_pages.dart';
 import 'package:cv/features/weather/ui/weather_screen.dart';
 
 part 'router.gr.dart';
@@ -20,10 +21,20 @@ class AppRouter extends _$AppRouter {
           path: '/home',
           page: HomeRoute.page,
         ),
-        AutoRoute(
-          path: '/weather',
-          page: WeatherRoute.page,
-        )
+        AutoRoute(path: '/weather', page: WeatherRoute.page, children: [
+          AutoRoute(
+            path: 'forecastTab',
+            page: ForecastTab.page,
+          ),
+          AutoRoute(
+            path: 'todayTab',
+            page: TodayTab.page,
+          ),
+          AutoRoute(
+            path: 'tommorowTab',
+            page: TommorowTab.page,
+          ),
+        ])
       ];
 
   AppRouter._();

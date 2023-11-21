@@ -1,14 +1,17 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:auto_route/auto_route.dart';
 import 'package:cv/assets/color/color_scheme.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
 import 'package:cv/features/weather/domain/model/_model.dart';
+import 'package:cv/features/weather/enum/weather_tab_enum.dart';
 import 'package:cv/features/weather/ui/widgets/custom_search_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
-  CustomHeaderDelegate();
+  final TabController tabsController;
+  CustomHeaderDelegate({required this.tabsController});
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
     final double progress;
@@ -48,15 +51,8 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
                   const SizedBox(
                     height: 16,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Row(
-                      children: [
-                        ForecastButton(text: 'Today'),
-                        ForecastButton(text: 'Tommorow'),
-                        ForecastButton(text: '10 days'),
-                      ],
-                    ),
+                  WeatherTabBar(
+                    tabsController: tabsController,
                   ),
                   SizedBox(
                     height: 16 * progress,
@@ -88,34 +84,82 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 }
 
+class WeatherTabBar extends StatefulWidget {
+  final TabController tabsController;
+  const WeatherTabBar({
+    super.key,
+    required this.tabsController,
+  });
+
+  @override
+  State<WeatherTabBar> createState() => _WeatherTabBarState();
+}
+
+class _WeatherTabBarState extends State<WeatherTabBar> {
+  @override
+  void initState() {
+    widget.tabsController.addListener(() {
+      setState(() {});
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final tabsRouter = AutoTabsRouter.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        ...WeatherTabEnum.values
+            .map(
+              (e) => GestureDetector(
+                onTap: () {
+                  widget.tabsController.animateTo(e.index);
+                },
+                child: ForecastButton(
+                  index: e.index,
+                  isSelected: tabsRouter.activeIndex == e.index,
+                  text: e.toString(),
+                ),
+              ),
+            )
+            .toList(),
+      ]),
+    );
+  }
+}
+
 class ForecastButton extends StatelessWidget {
   const ForecastButton({
     super.key,
     required this.text,
+    required this.index,
+    required this.isSelected,
   });
 
   final String text;
+  final int index;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
     final theme = AppColorScheme.of(context);
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8),
-        child: Container(
-          padding: const EdgeInsets.symmetric(
-            vertical: 10,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          vertical: 10,
+        ),
+        width: 100,
+        decoration: BoxDecoration(
+          color: isSelected ? theme.primary : theme.secondary.withOpacity(0.6),
+          borderRadius: const BorderRadius.all(
+            Radius.circular(14),
           ),
-          decoration: BoxDecoration(
-            color: theme.primary,
-            borderRadius: const BorderRadius.all(
-              Radius.circular(14),
-            ),
-          ),
-          child: Center(
-            child: Text(
-              text,
-            ),
+        ),
+        child: Center(
+          child: Text(
+            text,
           ),
         ),
       ),
