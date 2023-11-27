@@ -22,6 +22,7 @@ void _runApp() {
       ]);
       final scope = AppStorage();
       await scope.initTheme();
+      await scope.initDatabase();
       runApp(
         App(
           appScope: scope,

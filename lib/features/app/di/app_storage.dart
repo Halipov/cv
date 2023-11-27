@@ -1,6 +1,7 @@
 import 'package:cv/config/environment/environment.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/navigation/router.dart';
+import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_db_provider.dart';
 import 'package:cv/persistence/storage/theme_storage/theme_storage.dart';
 import 'package:cv/util/logger.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +13,9 @@ abstract class IAppStorage {
   VoidCallback get applicationRebuilder;
   AppRouter get router;
   IThemeService get themeService;
+  SqfliteService get sqfliteService;
   Future<void> initTheme();
+  Future<void> initDatabase();
 }
 
 class AppStorage implements IAppStorage {
@@ -21,6 +24,7 @@ class AppStorage implements IAppStorage {
   late final Dio _dio;
   late final AppRouter _router;
   late final IThemeService _themeService;
+  late final SqfliteService _sqfliteService;
 
   @override
   late VoidCallback applicationRebuilder;
@@ -81,5 +85,14 @@ class AppStorage implements IAppStorage {
 
   Future<void> _onThemeModeChanged() async {
     await _themeModeStorage.saveThemeMode(mode: _themeService.currentThemeMode);
+  }
+
+  @override
+  SqfliteService get sqfliteService => _sqfliteService;
+
+  @override
+  Future<void> initDatabase() async {
+    _sqfliteService = SqfliteService();
+    await _sqfliteService.init();
   }
 }

@@ -23,6 +23,7 @@ dependencies:
   json_annotation: 4.8.1
   # Storage
   shared_preferences: 2.1.0
+  sqflite: 2.3.0
   # Localization
   flutter_localizations:
     sdk: flutter
@@ -32,12 +33,14 @@ dependencies:
   talker_dio_logger: 2.0.0
   talker_bloc_logger: 2.0.0
   # charts
-  fl_chart: ^0.64.0
+  fl_chart: 0.64.0
   # animations
-  animations: ^2.0.8
+  animations: 2.0.8
   # utils
-  collection: ^1.17.2
-  rxdart: ^0.27.7
+  collection: 1.18.0
+  rxdart: 0.27.7
+  path_provider: 2.1.1
+  path: 1.8.3
 
 dev_dependencies:
   flutter_test:
