@@ -1,6 +1,8 @@
 import 'package:cv/config/environment/environment.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/navigation/router.dart';
+import 'package:cv/features/todo/domain/persistence/device_storage/device_storage_service.dart';
+import 'package:cv/features/todo/domain/persistence/device_storage/enum/storage_type.dart';
 import 'package:cv/features/todo/domain/persistence/hive/hive_service.dart';
 import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/persistence/storage/theme_storage/theme_storage.dart';
@@ -16,6 +18,7 @@ abstract class IAppStorage {
   IThemeService get themeService;
   SqfliteService get sqfliteService;
   HiveService get hiveService;
+  DeviceStorageService get deviceStorageService;
   Future<void> initTheme();
   Future<void> initDatabase();
 }
@@ -28,6 +31,7 @@ class AppStorage implements IAppStorage {
   late final IThemeService _themeService;
   late final SqfliteService _sqfliteService;
   late final HiveService _hiveService;
+  late final DeviceStorageService _deviceStorageService;
 
   @override
   late VoidCallback applicationRebuilder;
@@ -97,10 +101,19 @@ class AppStorage implements IAppStorage {
   Future<void> initDatabase() async {
     _sqfliteService = SqfliteService();
     _hiveService = HiveService();
+    _deviceStorageService = DeviceStorageService(
+      storageType: IosStorageType(
+        iosStorageTypeEnum: IosStorageTypeEnum.applicationDocumentsDirectory,
+      ),
+    );
     await _sqfliteService.init();
     await _hiveService.init();
+    await _deviceStorageService.init();
   }
 
   @override
   HiveService get hiveService => _hiveService;
+
+  @override
+  DeviceStorageService get deviceStorageService => _deviceStorageService;
 }
