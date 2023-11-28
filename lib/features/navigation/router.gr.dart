@@ -22,9 +22,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     CreateTaskRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
+      final args = routeData.argsAs<CreateTaskRouteArgs>(
+          orElse: () => const CreateTaskRouteArgs());
+      return AutoRoutePage<Todo>(
         routeData: routeData,
-        child: const CreateTaskScreen(),
+        child: CreateTaskScreen(key: args.key),
       );
     },
     TodoRoute.name: (routeData) {
@@ -76,16 +78,31 @@ class HomeRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [CreateTaskScreen]
-class CreateTaskRoute extends PageRouteInfo<void> {
-  const CreateTaskRoute({List<PageRouteInfo>? children})
-      : super(
+class CreateTaskRoute extends PageRouteInfo<CreateTaskRouteArgs> {
+  CreateTaskRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           CreateTaskRoute.name,
+          args: CreateTaskRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'CreateTaskRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<CreateTaskRouteArgs> page =
+      PageInfo<CreateTaskRouteArgs>(name);
+}
+
+class CreateTaskRouteArgs {
+  const CreateTaskRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'CreateTaskRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

@@ -4,6 +4,8 @@ import 'package:cv/features/app/di/app_storage.dart';
 import 'package:cv/util/logger.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:talker_bloc_logger/talker_bloc_logger_observer.dart';
 
 import 'features/app/app.dart';
 
@@ -23,6 +25,9 @@ void _runApp() {
       final scope = AppStorage();
       await scope.initTheme();
       await scope.initDatabase();
+      Bloc.observer = TalkerBlocObserver(
+        talker: talker,
+      );
       runApp(
         App(
           appScope: scope,

@@ -10,18 +10,12 @@ enum PriorityEnum {
         low => 'Low',
       };
 
-  static PriorityEnum fromIndex(int index) {
-    switch (index) {
-      case 2:
-        return high;
-      case 1:
-        return medium;
-      case 0:
-        return low;
-      default:
-        return low;
-    }
-  }
+  static PriorityEnum fromIndex(int index) => switch (index) {
+        2 => high,
+        1 => medium,
+        0 => low,
+        _ => low,
+      };
 
   int toIndex() => switch (this) {
         high => 2,

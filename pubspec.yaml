@@ -29,9 +29,9 @@ dependencies:
     sdk: flutter
   intl: 0.18.1
   # logger
-  talker_flutter: 3.1.1
-  talker_dio_logger: 2.0.0
-  talker_bloc_logger: 2.0.0
+  talker_flutter: 3.5.4
+  talker_dio_logger: 2.3.1
+  talker_bloc_logger: 2.2.1
   # charts
   fl_chart: 0.64.0
   # animations

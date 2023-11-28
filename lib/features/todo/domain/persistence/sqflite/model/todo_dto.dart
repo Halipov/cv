@@ -4,6 +4,7 @@ part 'todo_dto.g.dart';
 
 @JsonSerializable()
 class ToDoDto {
+  @JsonKey(includeToJson: false)
   final int id;
   final String name;
   final String description;

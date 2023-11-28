@@ -18,6 +18,10 @@ class SqfliteService {
           	"name"	TEXT NOT NULL,
           	PRIMARY KEY("id" AUTOINCREMENT)
           )
+          ''',
+        );
+        await database.execute(
+          '''
           CREATE TABLE "todo" (
 	          "id"	INTEGER NOT NULL UNIQUE,
 	          "name"	TEXT NOT NULL,
@@ -26,12 +30,12 @@ class SqfliteService {
 	          "isDone"	INTEGER NOT NULL DEFAULT 0,
 	          FOREIGN KEY("priorityId") REFERENCES "priority"("id"),
 	          PRIMARY KEY("id" AUTOINCREMENT)
-          );
-          INSERT INTO "priority" ("id", "name") VALUES ('0', 'Low');
-          INSERT INTO "priority" ("id", "name") VALUES ('1', 'Medium');
-          INSERT INTO "priority" ("id", "name") VALUES ('2', 'High');
+          )
           ''',
         );
+        await database.execute('''INSERT INTO "priority" ("id", "name") VALUES ('0', 'Low')''');
+        await database.execute('''INSERT INTO "priority" ("id", "name") VALUES ('1', 'Medium')''');
+        await database.execute('''INSERT INTO "priority" ("id", "name") VALUES ('2', 'High')''');
       },
       version: 1,
     );

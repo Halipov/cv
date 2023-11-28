@@ -1,12 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/assets/color/color_scheme.dart';
 import 'package:cv/features/common/widgets/base/_base.dart';
+import 'package:cv/features/todo/domain/model/todo.dart';
+import 'package:cv/features/todo/enum/priority_enum.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
-@RoutePage()
+@RoutePage<Todo>()
 class CreateTaskScreen extends StatelessWidget {
-  const CreateTaskScreen({super.key});
+  final titleTextController = TextEditingController();
+  final descriptionTextController = TextEditingController();
+  CreateTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -50,49 +53,45 @@ class CreateTaskScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text('Titles'),
-                    const TextField(),
+                    TextField(
+                      controller: titleTextController,
+                    ),
                     const SizedBox(
                       height: 16,
                     ),
                     const Text('Description'),
-                    const TextField(
+                    TextField(
+                      controller: descriptionTextController,
                       maxLines: 4,
                     ),
                     const SizedBox(
                       height: 16,
                     ),
-                    const Text('Deadline'),
-                    const SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      height: 40,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: theme.primary,
-                        ),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Center(
-                        child: Text(
-                          DateFormat('EEEE, d MMMM yyyy').format(
-                            DateTime.now(),
-                          ),
-                        ),
-                      ),
-                    ),
                     const Spacer(),
-                    BaseContainer(
-                      width: double.infinity,
-                      height: 50,
-                      color: theme.primary.withOpacity(0.7),
-                      child: const Text(
-                        'Create Task',
-                        style: TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400,
+                    GestureDetector(
+                      onTap: () {
+                        context.popRoute(
+                          Todo(
+                            id: 0,
+                            name: titleTextController.text,
+                            description: descriptionTextController.text,
+                            priorityEnum: PriorityEnum.low,
+                            isDone: false,
+                          ),
+                        );
+                      },
+                      child: BaseContainer(
+                        width: double.infinity,
+                        height: 50,
+                        color: theme.primary.withOpacity(0.7),
+                        child: const Text(
+                          'Create Task',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          textAlign: TextAlign.center,
                         ),
-                        textAlign: TextAlign.center,
                       ),
                     ),
                   ],

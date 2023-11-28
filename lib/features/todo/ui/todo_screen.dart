@@ -1,12 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/assets/color/color_scheme.dart';
-import 'package:cv/features/common/widgets/base/_base.dart';
 import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
 import 'package:cv/features/navigation/router.dart';
+import 'package:cv/features/todo/bloc/todo_bloc.dart';
 import 'package:cv/features/todo/di/todo_repository_storage.dart';
-import 'package:cv/features/todo/enum/time_tab_enum.dart';
-import 'package:cv/features/todo/ui/widgets/di/todo_repository_scope.dart';
+import 'package:cv/features/todo/domain/model/todo.dart';
+import 'package:cv/features/todo/ui/widgets/_widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 @RoutePage()
 class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -17,7 +19,14 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
       create: (context) => TodoRepositoryStorage(
         sqfliteService: AppScope.of(context).sqfliteService,
       ),
-      child: this,
+      child: BlocProvider<TodoBloc>(
+        create: (context) => TodoBloc(
+          persistenceTodoRepository: ToDoRepositoryScope.of(context).persistenceTodoRepository,
+        )..add(
+            const FetchToDosEvent(),
+          ),
+        child: this,
+      ),
     );
   }
 
@@ -33,10 +42,15 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
           Icons.add,
           size: 30,
         ),
-        onPressed: () {
-          context.pushRoute(
-            const CreateTaskRoute(),
+        onPressed: () async {
+          final todo = await context.pushRoute<Todo>(
+            CreateTaskRoute(),
           );
+          if (todo != null) {
+            BlocProvider.of<TodoBloc>(context).add(
+              AddToDoEvent(todo: todo),
+            );
+          }
         },
       ),
       body: Stack(
@@ -125,23 +139,64 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                 ),
                 child: Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: TimeTabEnum.values
-                          .map(
-                            (e) => Expanded(
-                              child: Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                                child: BaseContainer(
-                                  child: Text(
-                                    e.toString(),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ),
-                              ),
+                    // Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: TimeTabEnum.values
+                    //       .map(
+                    //         (e) => Expanded(
+                    //           child: Padding(
+                    //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //             child: BaseContainer(
+                    //               child: Text(
+                    //                 e.toString(),
+                    //                 textAlign: TextAlign.center,
+                    //               ),
+                    //             ),
+                    //           ),
+                    //         ),
+                    //       )
+                    //       .toList(),
+                    // ),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    Expanded(
+                      child: BlocBuilder<TodoBloc, TodoState>(
+                        builder: (context, state) => switch (state) {
+                          TodoLoading() => const Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                CircularProgressIndicator(),
+                              ],
                             ),
-                          )
-                          .toList(),
+                          TodoLoaded() => ListView.builder(
+                              itemCount: state.todoList.length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              itemBuilder: (context, index) {
+                                final item = state.todoList[index];
+                                return TodoTile(
+                                  item: item,
+                                  onDismissed: (direction) {
+                                    BlocProvider.of<TodoBloc>(context).add(
+                                      DeleteToDoEvent(
+                                        todo: item,
+                                      ),
+                                    );
+                                  },
+                                  onChanged: (value) {
+                                    BlocProvider.of<TodoBloc>(context).add(
+                                      UpdateToDoEvent(
+                                        todo: item.copyWith(isDone: value),
+                                      ),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                        },
+                      ),
                     )
                   ],
                 ),

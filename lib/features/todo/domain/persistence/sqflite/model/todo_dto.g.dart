@@ -15,7 +15,6 @@ ToDoDto _$ToDoDtoFromJson(Map<String, dynamic> json) => ToDoDto(
     );
 
 Map<String, dynamic> _$ToDoDtoToJson(ToDoDto instance) => <String, dynamic>{
-      'id': instance.id,
       'name': instance.name,
       'description': instance.description,
       'priorityId': instance.priorityId,
