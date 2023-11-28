@@ -18,10 +18,11 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
     return ToDoRepositoryScope(
       create: (context) => TodoRepositoryStorage(
         sqfliteService: AppScope.of(context).sqfliteService,
+        hiveService: AppScope.of(context).hiveService,
       ),
       child: BlocProvider<TodoBloc>(
         create: (context) => TodoBloc(
-          persistenceTodoRepository: ToDoRepositoryScope.of(context).persistenceTodoRepository,
+          persistenceTodoRepository: ToDoRepositoryScope.of(context).sqliteRepository,
         )..add(
             const FetchToDosEvent(),
           ),

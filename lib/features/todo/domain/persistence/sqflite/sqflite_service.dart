@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
 class SqfliteService {
-  Database? _database;
+  late Database _database;
 
   Future<void> init() async {
     String path = await getDatabasesPath();
@@ -41,14 +41,14 @@ class SqfliteService {
     );
   }
 
-  Future<List<ToDoDto>> getAllClients() async {
-    var res = await _database!.query("todo");
+  Future<List<ToDoDto>> getAllTodos() async {
+    var res = await _database.query("todo");
     List<ToDoDto> list = res.isNotEmpty ? res.map((c) => ToDoDto.fromJson(c)).toList() : [];
     return list;
   }
 
   Future<int> insertToDo(ToDoDto todo) async {
-    final id = await _database!.insert(
+    final id = await _database.insert(
       'todo',
       todo.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
@@ -57,12 +57,12 @@ class SqfliteService {
   }
 
   Future<int> updateToDo(ToDoDto todo) async {
-    final resultId = await _database!.update("todo", todo.toJson(), where: "id = ?", whereArgs: [todo.id]);
+    final resultId = await _database.update("todo", todo.toJson(), where: "id = ?", whereArgs: [todo.id]);
     return resultId;
   }
 
   Future<int> deleteTodo(ToDoDto todo) async {
-    final resultId = await _database!.delete("todo", where: "id = ?", whereArgs: [todo.id]);
+    final resultId = await _database.delete("todo", where: "id = ?", whereArgs: [todo.id]);
     return resultId;
   }
 }

@@ -1,7 +1,8 @@
 import 'package:cv/config/environment/environment.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/navigation/router.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_db_provider.dart';
+import 'package:cv/features/todo/domain/persistence/hive/hive_service.dart';
+import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/persistence/storage/theme_storage/theme_storage.dart';
 import 'package:cv/util/logger.dart';
 import 'package:dio/dio.dart';
@@ -14,6 +15,7 @@ abstract class IAppStorage {
   AppRouter get router;
   IThemeService get themeService;
   SqfliteService get sqfliteService;
+  HiveService get hiveService;
   Future<void> initTheme();
   Future<void> initDatabase();
 }
@@ -25,6 +27,7 @@ class AppStorage implements IAppStorage {
   late final AppRouter _router;
   late final IThemeService _themeService;
   late final SqfliteService _sqfliteService;
+  late final HiveService _hiveService;
 
   @override
   late VoidCallback applicationRebuilder;
@@ -93,6 +96,11 @@ class AppStorage implements IAppStorage {
   @override
   Future<void> initDatabase() async {
     _sqfliteService = SqfliteService();
+    _hiveService = HiveService();
     await _sqfliteService.init();
+    await _hiveService.init();
   }
+
+  @override
+  HiveService get hiveService => _hiveService;
 }

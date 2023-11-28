@@ -1,13 +1,13 @@
 import 'package:cv/features/todo/domain/model/todo.dart';
 import 'package:cv/features/todo/domain/persistence/sqflite/model/_model.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_db_provider.dart';
+import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
 class SqfliteRepository implements IPersistenceTodoRepository {
   final SqfliteService _service;
 
-  SqfliteRepository({required SqfliteService service}) : _service = service;
+  SqfliteRepository({required SqfliteService sqfliteService}) : _service = sqfliteService;
   @override
   Future<void> deleteTodo(Todo todo) async {
     try {
@@ -28,7 +28,7 @@ class SqfliteRepository implements IPersistenceTodoRepository {
   @override
   Future<List<Todo>> fetchAllToDo() async {
     try {
-      final result = await _service.getAllClients();
+      final result = await _service.getAllTodos();
       final entities = result
           .map(
             (e) => Todo(
