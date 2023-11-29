@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "986104460327",
+    "project_id": "mycv-4cc04",
+    "storage_bucket": "mycv-4cc04.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:986104460327:android:76aae67aeb3adb59e38a02",
+        "android_client_info": {
+          "package_name": "com.example.cv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCaztrMJ8_x4oKPmA_pS4dkRBRs3RZF-Wc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

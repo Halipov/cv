@@ -1,6 +1,6 @@
+import 'package:cv/features/todo/data/persistence/device_storage/device_storage_service.dart';
+import 'package:cv/features/todo/data/persistence/device_storage/model/todo_dto.dart';
 import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/device_storage_service.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/model/todo_dto.dart';
 import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 

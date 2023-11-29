@@ -1,10 +1,8 @@
 import 'package:cv/config/environment/environment.dart';
 import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/navigation/router.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/device_storage_service.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/enum/storage_type.dart';
-import 'package:cv/features/todo/domain/persistence/hive/hive_service.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
+import 'package:cv/features/todo/data/persistence/_persistence.dart';
+import 'package:cv/features/todo/data/persistence/device_storage/enum/storage_type.dart';
 import 'package:cv/persistence/storage/theme_storage/theme_storage.dart';
 import 'package:cv/util/logger.dart';
 import 'package:dio/dio.dart';

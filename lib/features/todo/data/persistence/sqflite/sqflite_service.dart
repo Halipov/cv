@@ -1,4 +1,4 @@
-import 'package:cv/features/todo/domain/persistence/sqflite/model/_model.dart';
+import 'package:cv/features/todo/data/persistence/sqflite/model/_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 

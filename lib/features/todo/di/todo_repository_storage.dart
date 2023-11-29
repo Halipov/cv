@@ -1,9 +1,4 @@
-import 'package:cv/features/todo/domain/persistence/device_storage/device_storage_service.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/repository/device_storage_repository.dart';
-import 'package:cv/features/todo/domain/persistence/hive/hive_service.dart';
-import 'package:cv/features/todo/domain/persistence/hive/repository/hive_repository.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/repository/sqflite_repository.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
+import 'package:cv/features/todo/data/persistence/_persistence.dart';
 import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
 
 abstract interface class ITodoRepositoryStorage {

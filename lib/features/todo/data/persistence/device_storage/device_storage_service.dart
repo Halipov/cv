@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cv/features/todo/domain/persistence/device_storage/enum/storage_type.dart';
-import 'package:cv/features/todo/domain/persistence/device_storage/model/todo_dto.dart';
+import 'package:cv/features/todo/data/persistence/device_storage/enum/storage_type.dart';
+import 'package:cv/features/todo/data/persistence/device_storage/model/todo_dto.dart';
 
 class DeviceStorageService {
   final StorageType _storageType;

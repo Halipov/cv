@@ -1,6 +1,6 @@
+import 'package:cv/features/todo/data/persistence/sqflite/model/_model.dart';
+import 'package:cv/features/todo/data/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/model/_model.dart';
-import 'package:cv/features/todo/domain/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 

@@ -1,4 +1,4 @@
-import 'package:cv/features/todo/domain/persistence/hive/model/_model.dart';
+import 'package:cv/features/todo/data/persistence/hive/model/_model.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 part 'todo_dto.g.dart';

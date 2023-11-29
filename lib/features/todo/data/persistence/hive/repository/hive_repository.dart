@@ -1,6 +1,6 @@
-import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/persistence/hive/hive_service.dart';
-import 'package:cv/features/todo/domain/persistence/hive/model/_model.dart';
+import 'package:cv/features/todo/data/persistence/hive/hive_service.dart';
+import 'package:cv/features/todo/data/persistence/hive/model/_model.dart';
+import 'package:cv/features/todo/domain/model/_model.dart';
 import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 

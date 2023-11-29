@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:cv/features/app/di/app_storage.dart';
+import 'package:cv/firebase_options.dart';
 import 'package:cv/util/logger.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'features/app/app.dart';
 /// App launch.
 Future<void> run() async {
   _initLogger();
+
   _runApp();
 }
 
@@ -22,6 +25,7 @@ void _runApp() {
       await SystemChrome.setPreferredOrientations([
         DeviceOrientation.portraitUp,
       ]);
+      await _initFirebase();
       final scope = AppStorage();
       await scope.initTheme();
       await scope.initDatabase();
@@ -41,4 +45,10 @@ void _runApp() {
 void _initLogger() {
   talker.debug('Talker started');
   FlutterError.onError = (details) => talker.handle(details.exception, details.stack);
+}
+
+Future<void> _initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 }
