@@ -21,6 +21,14 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const HomeScreen(),
       );
     },
+    AuthRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<AuthRouteArgs>(orElse: () => const AuthRouteArgs());
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: AuthScreen(key: args.key),
+      );
+    },
     CreateTaskRoute.name: (routeData) {
       final args = routeData.argsAs<CreateTaskRouteArgs>(
           orElse: () => const CreateTaskRouteArgs());
@@ -74,6 +82,34 @@ class HomeRoute extends PageRouteInfo<void> {
   static const String name = 'HomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AuthScreen]
+class AuthRoute extends PageRouteInfo<AuthRouteArgs> {
+  AuthRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
+          AuthRoute.name,
+          args: AuthRouteArgs(key: key),
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRoute';
+
+  static const PageInfo<AuthRouteArgs> page = PageInfo<AuthRouteArgs>(name);
+}
+
+class AuthRouteArgs {
+  const AuthRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'AuthRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

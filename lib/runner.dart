@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cv/features/app/di/app_storage.dart';
 import 'package:cv/firebase_options.dart';
 import 'package:cv/util/logger.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -29,6 +30,7 @@ void _runApp() {
       final scope = AppStorage();
       await scope.initTheme();
       await scope.initDatabase();
+
       Bloc.observer = TalkerBlocObserver(
         talker: talker,
       );
@@ -51,4 +53,11 @@ Future<void> _initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+    if (user == null) {
+      talker.info('User is currently signed out!');
+    } else {
+      talker.info('User is signed in!');
+    }
+  });
 }

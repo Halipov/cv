@@ -1,6 +1,6 @@
 import 'package:cv/features/todo/domain/model/_model.dart';
 
-abstract interface class IPersistenceTodoRepository {
+abstract interface class ITodoRepository {
   Future<List<Todo>> fetchAllToDo();
   Future<void> insertTodo(Todo todo);
   Future<void> updateTodo(Todo todo);

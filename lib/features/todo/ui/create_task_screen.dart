@@ -72,7 +72,7 @@ class CreateTaskScreen extends StatelessWidget {
                       onTap: () {
                         context.popRoute(
                           Todo(
-                            id: 0,
+                            id: '0',
                             name: titleTextController.text,
                             description: descriptionTextController.text,
                             priorityEnum: PriorityEnum.low,

@@ -1,10 +1,10 @@
 import 'package:cv/features/todo/data/persistence/sqflite/model/_model.dart';
 import 'package:cv/features/todo/data/persistence/sqflite/sqflite_service.dart';
 import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
+import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
-class SqfliteRepository implements IPersistenceTodoRepository {
+class SqfliteRepository implements ITodoRepository {
   final SqfliteService _service;
 
   SqfliteRepository({required SqfliteService sqfliteService}) : _service = sqfliteService;
@@ -13,7 +13,7 @@ class SqfliteRepository implements IPersistenceTodoRepository {
     try {
       await _service.deleteTodo(
         ToDoDto(
-          id: todo.id,
+          id: int.parse(todo.id),
           name: todo.name,
           description: todo.description,
           priorityId: todo.priorityEnum.toIndex(),
@@ -32,7 +32,7 @@ class SqfliteRepository implements IPersistenceTodoRepository {
       final entities = result
           .map(
             (e) => Todo(
-              id: e.id,
+              id: e.id.toString(),
               name: e.name,
               description: e.description,
               priorityEnum: PriorityEnum.fromIndex(e.priorityId),
@@ -51,7 +51,7 @@ class SqfliteRepository implements IPersistenceTodoRepository {
     try {
       _service.insertToDo(
         ToDoDto(
-          id: todo.id,
+          id: int.parse(todo.id),
           name: todo.name,
           description: todo.description,
           priorityId: todo.priorityEnum.toIndex(),
@@ -68,7 +68,7 @@ class SqfliteRepository implements IPersistenceTodoRepository {
     try {
       _service.updateToDo(
         ToDoDto(
-          id: todo.id,
+          id: int.parse(todo.id),
           name: todo.name,
           description: todo.description,
           priorityId: todo.priorityEnum.toIndex(),

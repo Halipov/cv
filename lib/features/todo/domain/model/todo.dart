@@ -2,7 +2,7 @@ import 'package:cv/features/todo/enum/priority_enum.dart';
 import 'package:equatable/equatable.dart';
 
 class Todo extends Equatable {
-  final int id;
+  final String id;
   final String name;
   final String description;
   final PriorityEnum priorityEnum;
@@ -26,7 +26,7 @@ class Todo extends Equatable {
       ];
 
   Todo copyWith({
-    int? id,
+    String? id,
     String? name,
     String? description,
     PriorityEnum? priorityEnum,

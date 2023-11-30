@@ -1,5 +1,5 @@
 import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
+import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -7,8 +7,8 @@ part 'todo_event.dart';
 part 'todo_state.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
-  final IPersistenceTodoRepository _persistenceTodoRepository;
-  TodoBloc({required IPersistenceTodoRepository persistenceTodoRepository})
+  final ITodoRepository _persistenceTodoRepository;
+  TodoBloc({required ITodoRepository persistenceTodoRepository})
       : _persistenceTodoRepository = persistenceTodoRepository,
         super(TodoLoading()) {
     on<AddToDoEvent>(_onAddToDoEventt);

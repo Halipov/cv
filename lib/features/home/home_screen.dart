@@ -71,6 +71,26 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              height: 16,
+            ),
+            GestureDetector(
+              onTap: () {
+                context.pushRoute(AuthRoute());
+              },
+              child: const Row(
+                children: [
+                  Expanded(
+                    child: BaseContainer(
+                      child: Text(
+                        'Auth',
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

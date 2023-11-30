@@ -1,17 +1,17 @@
 import 'package:cv/features/todo/data/persistence/device_storage/device_storage_service.dart';
 import 'package:cv/features/todo/data/persistence/device_storage/model/todo_dto.dart';
 import 'package:cv/features/todo/domain/model/todo.dart';
-import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
+import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
-class DeviceStorageRepository implements IPersistenceTodoRepository {
+class DeviceStorageRepository implements ITodoRepository {
   final DeviceStorageService _deviceStorageService;
 
   DeviceStorageRepository({required DeviceStorageService deviceStorageService})
       : _deviceStorageService = deviceStorageService;
   @override
   Future<void> deleteTodo(Todo todo) async {
-    await _deviceStorageService.deleteTodo(todo.id);
+    await _deviceStorageService.deleteTodo(int.parse(todo.id));
   }
 
   @override
@@ -20,7 +20,7 @@ class DeviceStorageRepository implements IPersistenceTodoRepository {
     return list
         .map(
           (e) => Todo(
-            id: e.id,
+            id: e.id.toString(),
             name: e.name,
             description: e.description,
             priorityEnum: PriorityEnum.fromIndex(e.priorityId),
@@ -34,7 +34,7 @@ class DeviceStorageRepository implements IPersistenceTodoRepository {
   Future<void> insertTodo(Todo todo) async {
     await _deviceStorageService.saveTodo(
       ToDoDto(
-        id: todo.id,
+        id: int.parse(todo.id),
         name: todo.name,
         description: todo.description,
         priorityId: todo.priorityEnum.toIndex(),
@@ -47,7 +47,7 @@ class DeviceStorageRepository implements IPersistenceTodoRepository {
   Future<void> updateTodo(Todo todo) async {
     await _deviceStorageService.updateTodo(
       ToDoDto(
-        id: todo.id,
+        id: int.parse(todo.id),
         name: todo.name,
         description: todo.description,
         priorityId: todo.priorityEnum.toIndex(),

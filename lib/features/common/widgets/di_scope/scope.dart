@@ -38,18 +38,6 @@ abstract class Scope extends StatefulWidget {
   State<StatefulWidget> createState() => createDelegate();
 }
 
-/// Mutable delegate of a Scope.
-///
-/// Similar to [State] of [StatefulWidget].
-///
-/// There are a few difference between [State] and [ScopeDelegate] classes:
-///   * [ScopeDelegate] has [keys] getter that indicates whether or not a
-/// dependant [Element] should be marked as dirty.
-///   * [ScopeDelegate] has [scope] getter that allows accessing the delegating
-/// [Scope].
-///   * [ScopeDelegate] has [buildScoping] method that should be overriden
-/// instead of the [build] method. Class that extends [ScopeDelegate] should
-/// **NEVER OVERRIDE THE BUILD METHOD**. It will break things.
 abstract class ScopeDelegate<S extends Scope> extends State<S> {
   List<Object?> get keys => const [];
 
@@ -60,7 +48,6 @@ abstract class ScopeDelegate<S extends Scope> extends State<S> {
   @override
   Widget build(BuildContext context) => _InheritedScope<S>(
         delegate: this,
-        // ignore: avoid-returning-widgets
         child: buildScoping(context, widget._child),
       );
 }

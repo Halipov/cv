@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cv/features/auth/ui/auth_screen.dart';
 import 'package:cv/features/home/home_screen.dart';
 import 'package:cv/features/todo/domain/model/_model.dart';
 import 'package:cv/features/todo/ui/create_task_screen.dart';
@@ -46,6 +47,10 @@ class AppRouter extends _$AppRouter {
         AutoRoute(
           path: '/toDo',
           page: TodoRoute.page,
+        ),
+        AutoRoute(
+          path: '/auth',
+          page: AuthRoute.page,
         ),
         AutoRoute(
           path: '/createTask',

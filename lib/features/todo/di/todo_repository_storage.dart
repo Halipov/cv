@@ -1,17 +1,19 @@
 import 'package:cv/features/todo/data/persistence/_persistence.dart';
-import 'package:cv/features/todo/domain/repository/persistence_repository.dart';
+import 'package:cv/features/todo/data/remote/firestore/repository/firestore_repository.dart';
+import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 
 abstract interface class ITodoRepositoryStorage {
-  IPersistenceTodoRepository get hiveRepository;
-  IPersistenceTodoRepository get sqliteRepository;
-  IPersistenceTodoRepository get deviceStorageRepository;
+  ITodoRepository get hiveRepository;
+  ITodoRepository get sqliteRepository;
+  ITodoRepository get deviceStorageRepository;
+  ITodoRepository get firestoreTodoRepository;
 }
 
 interface class TodoRepositoryStorage implements ITodoRepositoryStorage {
   final SqfliteService _sqfliteService;
   final HiveService _hiveService;
   final DeviceStorageService _deviceStorageService;
-  IPersistenceTodoRepository? _persistenceTodoRepository;
+  ITodoRepository? _persistenceTodoRepository;
 
   TodoRepositoryStorage({
     required SqfliteService sqfliteService,
@@ -22,16 +24,19 @@ interface class TodoRepositoryStorage implements ITodoRepositoryStorage {
         _hiveService = hiveService;
 
   @override
-  IPersistenceTodoRepository get hiveRepository => _persistenceTodoRepository ??= HiveRepository(
+  ITodoRepository get hiveRepository => _persistenceTodoRepository ??= HiveRepository(
         hiveService: _hiveService,
       );
   @override
-  IPersistenceTodoRepository get sqliteRepository => _persistenceTodoRepository ??= SqfliteRepository(
+  ITodoRepository get sqliteRepository => _persistenceTodoRepository ??= SqfliteRepository(
         sqfliteService: _sqfliteService,
       );
 
   @override
-  IPersistenceTodoRepository get deviceStorageRepository => _persistenceTodoRepository ??= DeviceStorageRepository(
+  ITodoRepository get deviceStorageRepository => _persistenceTodoRepository ??= DeviceStorageRepository(
         deviceStorageService: _deviceStorageService,
       );
+
+  @override
+  ITodoRepository get firestoreTodoRepository => _persistenceTodoRepository ??= FirestoreTodoRepository();
 }

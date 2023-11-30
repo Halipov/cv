@@ -23,7 +23,7 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
       ),
       child: BlocProvider<TodoBloc>(
         create: (context) => TodoBloc(
-          persistenceTodoRepository: ToDoRepositoryScope.of(context).deviceStorageRepository,
+          persistenceTodoRepository: ToDoRepositoryScope.of(context).firestoreTodoRepository,
         )..add(
             const FetchToDosEvent(),
           ),
