@@ -1,130 +1,8 @@
 import 'package:cv/assets/color/color_palette.dart';
 import 'package:flutter/material.dart';
 
-/// App brand color scheme.
-///
-/// This extension is in sync with base [ThemeData] and [ColorScheme].
-///
-/// Use case:
-///
-/// ```dart
-/// final colorScheme = CyberdomColorScheme.of(context);
-///
-/// return Container(color: colorScheme.primary);
-/// ```
 @immutable
 class AppColorScheme extends ThemeExtension<AppColorScheme> {
-  /// Base branding color for the app.
-  ///
-  /// Can be used as an accent color for buttons, switches, labels, icons, etc.
-  final Color primary;
-
-  /// The color of the text on [primary].
-  final Color onPrimary;
-
-  /// Secondary branding color for the app.
-  ///
-  /// Can be used as an accent color for buttons, switches, labels, icons, etc.
-  ///
-  /// Complements [primary] color.
-  final Color secondary;
-
-  /// The color of the text on [secondary].
-  final Color onSecondary;
-
-  /// Surface color.
-  ///
-  /// Usually, the background color of cards, alerts, dialogs, bottom sheets, etc
-  /// is considered a surface.
-  final Color surface;
-
-  /// Secondary surface color.
-  ///
-  /// Usually, the background color of cards, alerts, dialogs, bottom sheets, etc
-  /// is considered a surface.
-  final Color surfaceSecondary;
-
-  /// The color of the text on [surface].
-  final Color onSurface;
-
-  /// Background color.
-  ///
-  /// Usually refers to the general background of the screen.
-  final Color background;
-
-  /// Secondary background color.
-  ///
-  /// Usually refers to the general background of the screen.
-  final Color backgroundSecondary;
-
-  /// Tertiary background color.
-  ///
-  /// Usually refers to the general background of the screen.
-  final Color backgroundTertiary;
-
-  /// Tetradic background color.
-  ///
-  /// Usually refers to the general background of the screen.
-  final Color tetradicBackground;
-
-  /// The color of the text on [background].
-  final Color onBackground;
-
-  /// The color of the text on [background]. Muted version.
-  final Color onBackgroundSecondary;
-
-  /// Color of danger.
-  ///
-  /// Commonly used to display errors.
-  ///
-  /// Can be used as an accent color for text/background of an error message/destructive button.
-  final Color danger;
-
-  /// Secondary color of danger.
-  ///
-  /// Commonly used to display errors.
-  ///
-  /// Can be used as an accent color for text/background of an error message/destructive button.
-  final Color dangerSecondary;
-
-  /// The color of the text on [danger].
-  final Color onDanger;
-
-  /// Color of text in text field.
-  final Color textField;
-
-  /// Color of label in text field.
-  final Color textFieldLabel;
-
-  /// Color of helper text in text field.
-  final Color textFieldHelper;
-
-  /// Color of border and cursor in text field.
-  final Color frameTextFieldSecondary;
-
-  /// Color of inactive elements.
-  final Color inactive;
-
-  /// Positive color.
-  ///
-  /// Typically used for informational success messages.
-  final Color positive;
-
-  /// The color of the text on [positive].
-  final Color onPositive;
-
-  /// Primary skeleton color.
-  final Color skeletonPrimary;
-
-  /// The color of the text on [skeletonPrimary].
-  final Color skeletonOnPrimary;
-
-  /// Secondary skeleton color.
-  final Color skeletonSecondary;
-
-  /// Tertiary skeleton color.
-  final Color skeletonTertiary;
-
   /// Base light theme version.
   AppColorScheme.light()
       : primary = ColorPalette.purple,
@@ -145,7 +23,6 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         textField = ColorPalette.chineseBlack,
         textFieldLabel = ColorPalette.black,
         textFieldHelper = ColorPalette.black,
-        frameTextFieldSecondary = ColorPalette.chineseBlack,
         inactive = ColorPalette.black,
         positive = ColorPalette.greenYellow,
         onPositive = ColorPalette.chineseBlack,
@@ -175,7 +52,6 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
         textField = DarkColorPalette.lightSilver,
         textFieldLabel = DarkColorPalette.white,
         textFieldHelper = DarkColorPalette.black,
-        frameTextFieldSecondary = DarkColorPalette.lightSilver,
         inactive = DarkColorPalette.black,
         positive = DarkColorPalette.inchworm,
         onPositive = DarkColorPalette.black,
@@ -204,7 +80,6 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.textField,
     required this.textFieldLabel,
     required this.textFieldHelper,
-    required this.frameTextFieldSecondary,
     required this.inactive,
     required this.positive,
     required this.onPositive,
@@ -214,6 +89,36 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     required this.skeletonTertiary,
     required this.tetradicBackground,
   });
+
+  /// Base branding color for the app.
+  ///
+  /// Can be used as an accent color for buttons, switches, labels, icons, etc.
+  final Color primary;
+  final Color onPrimary;
+  final Color secondary;
+  final Color onSecondary;
+  final Color surface;
+  final Color surfaceSecondary;
+  final Color onSurface;
+  final Color background;
+  final Color backgroundSecondary;
+  final Color backgroundTertiary;
+  final Color tetradicBackground;
+  final Color onBackground;
+  final Color onBackgroundSecondary;
+  final Color danger;
+  final Color dangerSecondary;
+  final Color onDanger;
+  final Color textField;
+  final Color textFieldLabel;
+  final Color textFieldHelper;
+  final Color inactive;
+  final Color positive;
+  final Color onPositive;
+  final Color skeletonPrimary;
+  final Color skeletonOnPrimary;
+  final Color skeletonSecondary;
+  final Color skeletonTertiary;
 
   @override
   ThemeExtension<AppColorScheme> copyWith({
@@ -244,37 +149,36 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
     Color? skeletonSecondary,
     Color? skeletonTertiary,
     Color? tetradicBackground,
-  }) {
-    return AppColorScheme._(
-      primary: primary ?? this.primary,
-      onPrimary: onPrimary ?? this.onPrimary,
-      secondary: secondary ?? this.secondary,
-      onSecondary: onSecondary ?? this.onSecondary,
-      surface: surface ?? this.surface,
-      surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
-      onSurface: onSurface ?? this.onSurface,
-      background: background ?? this.background,
-      onBackground: onBackground ?? this.onBackground,
-      danger: danger ?? this.danger,
-      dangerSecondary: dangerSecondary ?? this.dangerSecondary,
-      onDanger: onDanger ?? this.onDanger,
-      backgroundSecondary: backgroundSecondary ?? this.backgroundSecondary,
-      onBackgroundSecondary: onBackgroundSecondary ?? this.onBackgroundSecondary,
-      backgroundTertiary: backgroundTertiary ?? this.backgroundTertiary,
-      textField: textField ?? this.textField,
-      textFieldLabel: textFieldLabel ?? this.textFieldLabel,
-      textFieldHelper: textFieldHelper ?? this.textFieldHelper,
-      frameTextFieldSecondary: frameTextFieldSecondary ?? this.frameTextFieldSecondary,
-      inactive: inactive ?? this.inactive,
-      positive: positive ?? this.positive,
-      onPositive: onPositive ?? this.onPositive,
-      skeletonPrimary: skeletonPrimary ?? this.skeletonPrimary,
-      skeletonOnPrimary: skeletonOnPrimary ?? this.skeletonOnPrimary,
-      skeletonSecondary: skeletonSecondary ?? this.skeletonSecondary,
-      skeletonTertiary: skeletonTertiary ?? this.skeletonTertiary,
-      tetradicBackground: tetradicBackground ?? this.tetradicBackground,
-    );
-  }
+  }) =>
+      AppColorScheme._(
+        primary: primary ?? this.primary,
+        onPrimary: onPrimary ?? this.onPrimary,
+        secondary: secondary ?? this.secondary,
+        onSecondary: onSecondary ?? this.onSecondary,
+        surface: surface ?? this.surface,
+        surfaceSecondary: surfaceSecondary ?? this.surfaceSecondary,
+        onSurface: onSurface ?? this.onSurface,
+        background: background ?? this.background,
+        onBackground: onBackground ?? this.onBackground,
+        danger: danger ?? this.danger,
+        dangerSecondary: dangerSecondary ?? this.dangerSecondary,
+        onDanger: onDanger ?? this.onDanger,
+        backgroundSecondary: backgroundSecondary ?? this.backgroundSecondary,
+        onBackgroundSecondary:
+            onBackgroundSecondary ?? this.onBackgroundSecondary,
+        backgroundTertiary: backgroundTertiary ?? this.backgroundTertiary,
+        textField: textField ?? this.textField,
+        textFieldLabel: textFieldLabel ?? this.textFieldLabel,
+        textFieldHelper: textFieldHelper ?? this.textFieldHelper,
+        inactive: inactive ?? this.inactive,
+        positive: positive ?? this.positive,
+        onPositive: onPositive ?? this.onPositive,
+        skeletonPrimary: skeletonPrimary ?? this.skeletonPrimary,
+        skeletonOnPrimary: skeletonOnPrimary ?? this.skeletonOnPrimary,
+        skeletonSecondary: skeletonSecondary ?? this.skeletonSecondary,
+        skeletonTertiary: skeletonTertiary ?? this.skeletonTertiary,
+        tetradicBackground: tetradicBackground ?? this.tetradicBackground,
+      );
 
   @override
   ThemeExtension<AppColorScheme> lerp(
@@ -291,31 +195,39 @@ class AppColorScheme extends ThemeExtension<AppColorScheme> {
       secondary: Color.lerp(secondary, other.secondary, t)!,
       onSecondary: Color.lerp(onSecondary, other.onSecondary, t)!,
       surface: Color.lerp(surface, other.surface, t)!,
-      surfaceSecondary: Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
+      surfaceSecondary:
+          Color.lerp(surfaceSecondary, other.surfaceSecondary, t)!,
       onSurface: Color.lerp(onSurface, other.onSurface, t)!,
       background: Color.lerp(background, other.background, t)!,
-      backgroundSecondary: Color.lerp(backgroundSecondary, other.backgroundSecondary, t)!,
-      backgroundTertiary: Color.lerp(backgroundTertiary, other.backgroundTertiary, t)!,
+      backgroundSecondary:
+          Color.lerp(backgroundSecondary, other.backgroundSecondary, t)!,
+      backgroundTertiary:
+          Color.lerp(backgroundTertiary, other.backgroundTertiary, t)!,
       onBackground: Color.lerp(onBackground, other.onBackground, t)!,
-      onBackgroundSecondary: Color.lerp(onBackgroundSecondary, other.onBackgroundSecondary, t)!,
+      onBackgroundSecondary:
+          Color.lerp(onBackgroundSecondary, other.onBackgroundSecondary, t)!,
       danger: Color.lerp(danger, other.danger, t)!,
       dangerSecondary: Color.lerp(dangerSecondary, other.dangerSecondary, t)!,
       onDanger: Color.lerp(onDanger, other.onDanger, t)!,
       textField: Color.lerp(textField, other.textField, t)!,
       textFieldLabel: Color.lerp(textFieldLabel, other.textFieldLabel, t)!,
       textFieldHelper: Color.lerp(textFieldHelper, other.textFieldHelper, t)!,
-      frameTextFieldSecondary: Color.lerp(frameTextFieldSecondary, other.frameTextFieldSecondary, t)!,
       inactive: Color.lerp(inactive, other.inactive, t)!,
       positive: Color.lerp(positive, other.positive, t)!,
       onPositive: Color.lerp(onPositive, other.onPositive, t)!,
       skeletonPrimary: Color.lerp(skeletonPrimary, other.skeletonPrimary, t)!,
-      skeletonOnPrimary: Color.lerp(skeletonOnPrimary, other.skeletonOnPrimary, t)!,
-      skeletonSecondary: Color.lerp(skeletonSecondary, other.skeletonSecondary, t)!,
-      skeletonTertiary: Color.lerp(skeletonTertiary, other.skeletonTertiary, t)!,
-      tetradicBackground: Color.lerp(tetradicBackground, other.tetradicBackground, t)!,
+      skeletonOnPrimary:
+          Color.lerp(skeletonOnPrimary, other.skeletonOnPrimary, t)!,
+      skeletonSecondary:
+          Color.lerp(skeletonSecondary, other.skeletonSecondary, t)!,
+      skeletonTertiary:
+          Color.lerp(skeletonTertiary, other.skeletonTertiary, t)!,
+      tetradicBackground:
+          Color.lerp(tetradicBackground, other.tetradicBackground, t)!,
     );
   }
 
   /// Returns [AppColorScheme] from [context].
-  static AppColorScheme of(BuildContext context) => Theme.of(context).extension<AppColorScheme>()!;
+  static AppColorScheme of(BuildContext context) =>
+      Theme.of(context).extension<AppColorScheme>()!;
 }

@@ -10,12 +10,21 @@ class FirestoreTodoRepository implements ITodoRepository {
   final _firestore = FirebaseFirestore.instance;
   @override
   Future<void> deleteTodo(Todo todo) async {
-    await FirebaseFirestore.instance.collection(collectionName).doc(todo.id).delete();
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(
+          todo.id,
+        )
+        .delete();
   }
 
   @override
   Future<List<Todo>> fetchAllToDo() async {
-    final collection = await _firestore.collection(collectionName).get();
+    final collection = await _firestore
+        .collection(
+          collectionName,
+        )
+        .get();
     final todos = collection.docs.map(
       (e) => ToDoDto.fromJson(e.data()).copyWith(
         id: e.id,
@@ -36,7 +45,7 @@ class FirestoreTodoRepository implements ITodoRepository {
 
   @override
   Future<void> insertTodo(Todo todo) async {
-    await FirebaseFirestore.instance.collection(collectionName).doc(todo.id).set(
+    await FirebaseFirestore.instance.collection(collectionName).add(
           ToDoDto(
             name: todo.name,
             description: todo.description,
@@ -48,7 +57,12 @@ class FirestoreTodoRepository implements ITodoRepository {
 
   @override
   Future<void> updateTodo(Todo todo) async {
-    await FirebaseFirestore.instance.collection(collectionName).doc(todo.id).update(
+    await FirebaseFirestore.instance
+        .collection(collectionName)
+        .doc(
+          todo.id,
+        )
+        .update(
           ToDoDto(
             name: todo.name,
             description: todo.description,

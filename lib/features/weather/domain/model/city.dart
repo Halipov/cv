@@ -4,12 +4,6 @@ part 'city.g.dart';
 
 @JsonSerializable()
 class City {
-  final String name;
-  final String region;
-  final String country;
-  final double lat;
-  final double lon;
-
   City({
     required this.name,
     required this.region,
@@ -29,4 +23,10 @@ class City {
   factory City.fromJson(Map<String, dynamic> json) => _$CityFromJson(json);
 
   Map<String, dynamic> toJson() => _$CityToJson(this);
+
+  final String name;
+  final String region;
+  final String country;
+  final double lat;
+  final double lon;
 }

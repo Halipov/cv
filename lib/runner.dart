@@ -16,11 +16,11 @@ import 'features/app/app.dart';
 Future<void> run() async {
   _initLogger();
 
-  _runApp();
+  await _runApp();
 }
 
-void _runApp() {
-  runZonedGuarded<Future<void>>(
+Future<void> _runApp() async {
+  await runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
       await SystemChrome.setPreferredOrientations([
@@ -40,24 +40,30 @@ void _runApp() {
         ),
       );
     },
-    (exception, stack) => talker.handle(exception, stack),
+    talker.handle,
   );
 }
 
 void _initLogger() {
   talker.debug('Talker started');
-  FlutterError.onError = (details) => talker.handle(details.exception, details.stack);
+  FlutterError.onError = (details) => talker.handle(
+        details.exception,
+        details.stack,
+      );
 }
 
 Future<void> _initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseAuth.instance.authStateChanges().listen((User? user) {
+  FirebaseAuth.instance.authStateChanges().listen((user) {
     if (user == null) {
       talker.info('User is currently signed out!');
     } else {
       talker.info('User is signed in!');
     }
   });
+  // final analytics = FirebaseAnalytics.instance;
+  // final firebaseMessaging = FirebaseInAppMessaging.instance;
+  // await firebaseMessaging.setAutomaticDataCollectionEnabled(true);
 }

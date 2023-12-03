@@ -27,16 +27,15 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
-          mainAxisSize: MainAxisSize.max,
           children: [
             const SizedBox(
               height: 20,
             ),
             GestureDetector(
-              onTap: () {
-                context.pushRoute(const WeatherRoute());
+              onTap: () async {
+                await context.pushRoute(const WeatherRoute());
               },
               child: const Row(
                 children: [
@@ -55,8 +54,8 @@ class HomeScreen extends StatelessWidget {
               height: 16,
             ),
             GestureDetector(
-              onTap: () {
-                context.pushRoute(const TodoRoute());
+              onTap: () async {
+                await context.pushRoute(const TodoRoute());
               },
               child: const Row(
                 children: [
@@ -75,8 +74,8 @@ class HomeScreen extends StatelessWidget {
               height: 16,
             ),
             GestureDetector(
-              onTap: () {
-                context.pushRoute(AuthRoute());
+              onTap: () async {
+                await context.pushRoute(AuthRoute());
               },
               child: const Row(
                 children: [

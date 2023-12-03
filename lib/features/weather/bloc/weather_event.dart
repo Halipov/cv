@@ -8,7 +8,6 @@ sealed class WeatherEvent extends Equatable {
 }
 
 class FetchWeatherEvent extends WeatherEvent {
-  final City city;
-
   const FetchWeatherEvent({required this.city});
+  final City city;
 }

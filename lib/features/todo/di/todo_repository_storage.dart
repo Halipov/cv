@@ -5,16 +5,11 @@ import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 abstract interface class ITodoRepositoryStorage {
   ITodoRepository get hiveRepository;
   ITodoRepository get sqliteRepository;
-  ITodoRepository get deviceStorageRepository;
+  ITodoRepository get deviceRepository;
   ITodoRepository get firestoreTodoRepository;
 }
 
 interface class TodoRepositoryStorage implements ITodoRepositoryStorage {
-  final SqfliteService _sqfliteService;
-  final HiveService _hiveService;
-  final DeviceStorageService _deviceStorageService;
-  ITodoRepository? _persistenceTodoRepository;
-
   TodoRepositoryStorage({
     required SqfliteService sqfliteService,
     required HiveService hiveService,
@@ -22,21 +17,27 @@ interface class TodoRepositoryStorage implements ITodoRepositoryStorage {
   })  : _sqfliteService = sqfliteService,
         _deviceStorageService = deviceStorageService,
         _hiveService = hiveService;
+  final SqfliteService _sqfliteService;
+  final HiveService _hiveService;
+  final DeviceStorageService _deviceStorageService;
+  ITodoRepository? _todoRepository;
 
   @override
-  ITodoRepository get hiveRepository => _persistenceTodoRepository ??= HiveRepository(
+  ITodoRepository get hiveRepository => _todoRepository ??= HiveRepository(
         hiveService: _hiveService,
       );
   @override
-  ITodoRepository get sqliteRepository => _persistenceTodoRepository ??= SqfliteRepository(
+  ITodoRepository get sqliteRepository => _todoRepository ??= SqfliteRepository(
         sqfliteService: _sqfliteService,
       );
 
   @override
-  ITodoRepository get deviceStorageRepository => _persistenceTodoRepository ??= DeviceStorageRepository(
-        deviceStorageService: _deviceStorageService,
+  ITodoRepository get deviceRepository =>
+      _todoRepository ??= DeviceStorageRepository(
+        deviceService: _deviceStorageService,
       );
 
   @override
-  ITodoRepository get firestoreTodoRepository => _persistenceTodoRepository ??= FirestoreTodoRepository();
+  ITodoRepository get firestoreTodoRepository =>
+      _todoRepository ??= FirestoreTodoRepository();
 }

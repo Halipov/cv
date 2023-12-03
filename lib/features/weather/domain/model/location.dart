@@ -6,21 +6,23 @@ part 'location.g.dart';
 
 @JsonSerializable()
 class Location extends Equatable {
-  final String name;
-  final String region;
-  final String country;
-  @LocalTimeConverter()
-  final DateTime localtime;
-
   const Location({
     required this.name,
     required this.region,
     required this.country,
     required this.localtime,
   });
-  factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
+
+  factory Location.fromJson(Map<String, dynamic> json) =>
+      _$LocationFromJson(json);
 
   Map<String, dynamic> toJson() => _$LocationToJson(this);
+
+  final String name;
+  final String region;
+  final String country;
+  @LocalTimeConverter()
+  final DateTime localtime;
 
   @override
   List<Object?> get props => [name, region, country, localtime];

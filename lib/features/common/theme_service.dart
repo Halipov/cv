@@ -8,12 +8,11 @@ abstract class IThemeService extends ChangeNotifier {
 }
 
 class ThemeServiceImpl extends IThemeService {
+  ThemeServiceImpl(this._themeMode);
   @override
   ThemeMode get currentThemeMode => _themeMode;
 
   late ThemeMode _themeMode;
-
-  ThemeServiceImpl(this._themeMode);
 
   @override
   void switchTheme() {

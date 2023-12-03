@@ -14,6 +14,9 @@ part 'router.gr.dart';
   replaceInRouteName: 'ScreenWidget|Screen,Route',
 )
 class AppRouter extends _$AppRouter {
+  AppRouter._();
+
+  factory AppRouter.instance() => _router;
   static final AppRouter _router = AppRouter._();
 
   @override
@@ -57,8 +60,4 @@ class AppRouter extends _$AppRouter {
           page: CreateTaskRoute.page,
         ),
       ];
-
-  AppRouter._();
-
-  factory AppRouter.instance() => _router;
 }

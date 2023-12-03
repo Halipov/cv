@@ -5,6 +5,13 @@ part 'todo_dto.g.dart';
 
 @HiveType(typeId: 1)
 class ToDoDto extends HiveObject {
+  ToDoDto({
+    required this.name,
+    required this.description,
+    this.priority = PriorityDto.low,
+    this.isDone = false,
+  });
+
   @HiveField(0)
   final String name;
   @HiveField(1)
@@ -13,11 +20,4 @@ class ToDoDto extends HiveObject {
   final PriorityDto priority;
   @HiveField(3)
   final bool isDone;
-
-  ToDoDto({
-    required this.name,
-    required this.description,
-    this.priority = PriorityDto.low,
-    this.isDone = false,
-  });
 }

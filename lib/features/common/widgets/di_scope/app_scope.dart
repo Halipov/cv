@@ -4,16 +4,16 @@ import 'package:flutter/material.dart';
 import 'scope.dart';
 
 class AppScope extends Scope {
+  const AppScope({
+    required this.create,
+    required super.child,
+    super.key,
+  });
+
   static const DelegateAccess<_RepositoryScopeDelegate> _delegateOf =
       Scope.delegateOf<AppScope, _RepositoryScopeDelegate>;
 
   final IAppStorage Function(BuildContext context) create;
-
-  const AppScope({
-    required this.create,
-    required Widget child,
-    Key? key,
-  }) : super(child: child, key: key);
 
   static IAppStorage of(BuildContext context) => _delegateOf(context).storage;
 

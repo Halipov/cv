@@ -5,14 +5,13 @@ class HiveService {
   late Box<ToDoDto> _todoBox;
   Future<void> init() async {
     await Hive.initFlutter();
-    Hive.registerAdapter(ToDoDtoAdapter());
-    Hive.registerAdapter(PriorityDtoAdapter());
+    Hive
+      ..registerAdapter(ToDoDtoAdapter())
+      ..registerAdapter(PriorityDtoAdapter());
     _todoBox = await Hive.openBox<ToDoDto>('todoBox');
   }
 
-  List<ToDoDto> getAllTodos() {
-    return _todoBox.values.toList();
-  }
+  List<ToDoDto> getAllTodos() => _todoBox.values.toList();
 
   Future<void> insertToDo(ToDoDto todo, int index) async {
     await _todoBox.add(todo);

@@ -5,10 +5,12 @@ import 'package:cv/features/todo/data/persistence/device_storage/enum/storage_ty
 import 'package:cv/features/todo/data/persistence/device_storage/model/todo_dto.dart';
 
 class DeviceStorageService {
+  DeviceStorageService({
+    required StorageType storageType,
+  }) : _storageType = storageType;
+
   final StorageType _storageType;
   late File _file;
-
-  DeviceStorageService({required StorageType storageType}) : _storageType = storageType;
 
   Future<void> init() async {
     final directory = await _storageType.getDirectory();
@@ -25,7 +27,7 @@ class DeviceStorageService {
   }
 
   Future<void> saveTodo(ToDoDto todo) async {
-    final List<ToDoDto> currentTodos = await fetchTodos();
+    final currentTodos = await fetchTodos();
     currentTodos.add(
       todo.copyWith(
         id: currentTodos.length + 1,
@@ -36,16 +38,16 @@ class DeviceStorageService {
 
   Future<List<ToDoDto>> fetchTodos() async {
     try {
-      final exists = await _file.exists();
+      final exists = _file.existsSync();
       if (exists) {
         final content = await _file.readAsString();
-        final taskItems = json.decode(content) as List<dynamic>;
-        final resultList = taskItems.map((task) => ToDoDto.fromJson(task));
+        final taskItems = json.decode(content) as List<Map<String, dynamic>>;
+        final resultList = taskItems.map<ToDoDto>(ToDoDto.fromJson);
         return resultList.toList();
       } else {
         return [];
       }
-    } catch (e) {
+    } on () {
       rethrow;
     }
   }

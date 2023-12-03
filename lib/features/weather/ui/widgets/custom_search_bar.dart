@@ -10,13 +10,13 @@ import 'package:flutter/material.dart';
 class CustomSearchBar extends StatelessWidget {
   final Color color;
   final String initialQuery;
-  final Function(City city) onComplete;
+  final void Function(City city) onComplete;
   const CustomSearchBar({
-    Key? key,
+    super.key,
     required this.color,
     required this.initialQuery,
     required this.onComplete,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,12 +25,10 @@ class CustomSearchBar extends StatelessWidget {
       onTap: () async {
         final city = await showDialog<City>(
           context: context,
-          builder: (ctx) {
-            return _SearchView(
-              weatherRepository: repository,
-              initialQuery: initialQuery,
-            );
-          },
+          builder: (ctx) => _SearchView(
+            weatherRepository: repository,
+            initialQuery: initialQuery,
+          ),
         );
         if (city != null) {
           onComplete(city);
@@ -49,7 +47,7 @@ class CustomSearchBar extends StatelessWidget {
           Icon(
             Icons.search,
             color: color,
-          )
+          ),
         ],
       ),
     );
@@ -65,91 +63,91 @@ class _SearchView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return Material(
-      color: Colors.transparent,
-      child: BackdropFilter(
-        filter: ImageFilter.blur(
-          sigmaX: 6,
-          sigmaY: 6,
-        ),
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8).copyWith(),
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            borderRadius: BorderRadius.circular(
-              16,
+  Widget build(BuildContext context) => Material(
+        color: Colors.transparent,
+        child: BackdropFilter(
+          filter: ImageFilter.blur(
+            sigmaX: 6,
+            sigmaY: 6,
+          ),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8).copyWith(),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+              borderRadius: BorderRadius.circular(
+                16,
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextField(
+                  style: const TextStyle(color: Colors.white),
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: initialQuery,
+                  ),
+                  textInputAction: TextInputAction.search,
+                  onChanged: weatherRepository.searchCity,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                StreamBuilder<List<City>>(
+                  stream: weatherRepository.result,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            final city = snapshot.data![index];
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pop(city);
+                              },
+                              child: BaseContainer(
+                                color: AppColorScheme.of(context)
+                                    .primary
+                                    .withOpacity(0.2),
+                                margin: const EdgeInsets.symmetric(vertical: 4),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      city.country,
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.8),
+                                        fontSize: 15,
+                                      ),
+                                    ),
+                                    Text(
+                                      city.name,
+                                      style: TextStyle(
+                                        color: Colors.white.withOpacity(0.8),
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                          itemCount: snapshot.data!.length,
+                        ),
+                      );
+                    } else {
+                      return Expanded(
+                        child: Container(),
+                      );
+                    }
+                  },
+                ),
+              ],
             ),
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                style: const TextStyle(color: Colors.white),
-                autofocus: true,
-                decoration: InputDecoration(
-                  hintText: initialQuery,
-                ),
-                textInputAction: TextInputAction.search,
-                onChanged: weatherRepository.searchCity,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              StreamBuilder<List<City>>(
-                stream: weatherRepository.result,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return Expanded(
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        itemBuilder: (context, index) {
-                          final city = snapshot.data![index];
-                          return GestureDetector(
-                            onTap: () {
-                              Navigator.of(context).pop(city);
-                            },
-                            child: BaseContainer(
-                              color: AppColorScheme.of(context).primary.withOpacity(0.2),
-                              margin: const EdgeInsets.symmetric(vertical: 4),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    city.country,
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8),
-                                      fontSize: 15,
-                                    ),
-                                  ),
-                                  Text(
-                                    city.name,
-                                    style: TextStyle(
-                                      color: Colors.white.withOpacity(0.8),
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        itemCount: snapshot.data!.length,
-                      ),
-                    );
-                  } else {
-                    return Expanded(
-                      child: Container(),
-                    );
-                  }
-                },
-              ),
-            ],
-          ),
         ),
-      ),
-    );
-  }
+      );
 }

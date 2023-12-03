@@ -7,14 +7,14 @@ import 'package:flutter/material.dart';
 
 @RoutePage<Todo>()
 class CreateTaskScreen extends StatelessWidget {
+  CreateTaskScreen({super.key});
   final titleTextController = TextEditingController();
   final descriptionTextController = TextEditingController();
-  CreateTaskScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final theme = AppColorScheme.of(context);
-    double screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -69,8 +69,8 @@ class CreateTaskScreen extends StatelessWidget {
                     ),
                     const Spacer(),
                     GestureDetector(
-                      onTap: () {
-                        context.popRoute(
+                      onTap: () async {
+                        await context.popRoute(
                           Todo(
                             id: '0',
                             name: titleTextController.text,

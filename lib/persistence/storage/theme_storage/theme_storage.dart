@@ -2,23 +2,14 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-/// Persistent storage for theme mode.
 abstract class IThemeModeStorage {
-  /// Returns saved theme mode.
   Future<ThemeMode?> getThemeMode();
-
-  /// Save selected theme mode.
   Future<void> saveThemeMode({required ThemeMode mode});
 }
 
-/// Persistent storage for theme mode.
-///
-/// Based on SharedPreferences.
 class ThemeModeStorageImpl implements IThemeModeStorage {
-  static const String _themeModeKey = 'theme_mode';
-
-  /// Create an instance [ThemeModeStorageImpl].
   ThemeModeStorageImpl();
+  static const String _themeModeKey = 'theme_mode';
 
   @override
   Future<ThemeMode?> getThemeMode() async {

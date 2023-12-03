@@ -7,11 +7,8 @@ typedef DelegateAccess<D extends ScopeDelegate> = D Function(
 });
 
 abstract class Scope extends StatefulWidget {
+  const Scope({super.key, required Widget child}) : _child = child;
   final Widget _child;
-
-  const Scope({Key? key, required Widget child})
-      : _child = child,
-        super(key: key);
 
   static D delegateOf<S extends Scope, D extends ScopeDelegate<S>>(
     BuildContext context, {
@@ -19,7 +16,9 @@ abstract class Scope extends StatefulWidget {
   }) {
     final scope = listen
         ? context.dependOnInheritedWidgetOfExactType<_InheritedScope<S>>()
-        : context.getElementForInheritedWidgetOfExactType<_InheritedScope<S>>()?.widget as _InheritedScope<S>?;
+        : context
+            .getElementForInheritedWidgetOfExactType<_InheritedScope<S>>()
+            ?.widget as _InheritedScope<S>?;
     assert(
       scope != null,
       'Unable to locate $D of $S. Either it was not declared as an ancestor '
@@ -53,16 +52,20 @@ abstract class ScopeDelegate<S extends Scope> extends State<S> {
 }
 
 class _InheritedScope<S extends Scope> extends InheritedWidget {
+  _InheritedScope({
+    super.key,
+    required this.delegate,
+    required super.child,
+  }) : keys = delegate.keys;
   final List<Object?> keys;
   final ScopeDelegate<Scope> delegate;
 
-  _InheritedScope({
-    Key? key,
-    required this.delegate,
-    required Widget child,
-  })  : keys = delegate.keys,
-        super(child: child, key: key);
-
   @override
-  bool updateShouldNotify(_InheritedScope<S> oldWidget) => !const DeepCollectionEquality().equals(keys, oldWidget.keys);
+  bool updateShouldNotify(
+    _InheritedScope<S> oldWidget,
+  ) =>
+      !const DeepCollectionEquality().equals(
+        keys,
+        oldWidget.keys,
+      );
 }

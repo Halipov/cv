@@ -1,10 +1,10 @@
 /// Application configuration.
 class AppConfig {
-  final String url;
-
   AppConfig({
     required this.url,
   });
+  final String url;
+
   AppConfig copyWith({
     String? url,
     String? proxyUrl,

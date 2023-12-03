@@ -5,10 +5,12 @@ import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
 class DeviceStorageRepository implements ITodoRepository {
+  DeviceStorageRepository({
+    required DeviceStorageService deviceService,
+  }) : _deviceStorageService = deviceService;
+
   final DeviceStorageService _deviceStorageService;
 
-  DeviceStorageRepository({required DeviceStorageService deviceStorageService})
-      : _deviceStorageService = deviceStorageService;
   @override
   Future<void> deleteTodo(Todo todo) async {
     await _deviceStorageService.deleteTodo(int.parse(todo.id));

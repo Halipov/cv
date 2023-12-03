@@ -9,14 +9,6 @@ abstract interface class IWeatherRepository {
 }
 
 class WeatherApiRepository extends IWeatherRepository {
-  final IWeatherService _weatherApiService;
-
-  final _searchTerms = BehaviorSubject<String>();
-  Stream<List<City>> _results = Stream.fromIterable([]);
-
-  @override
-  void searchCity(String query) => _searchTerms.add(query);
-
   WeatherApiRepository({
     required IWeatherService weatherApiService,
   }) : _weatherApiService = weatherApiService {
@@ -35,19 +27,26 @@ class WeatherApiRepository extends IWeatherRepository {
       },
     );
   }
+  final IWeatherService _weatherApiService;
+
+  final _searchTerms = BehaviorSubject<String>();
+  Stream<List<City>> _results = Stream.fromIterable([]);
+
+  @override
+  void searchCity(String query) => _searchTerms.add(query);
 
   @override
   Future<Weather> fetchWeather(String location, int days) async {
     try {
       final weather = await _weatherApiService.fetchWeather(location, days);
       return weather;
-    } catch (_) {
+    } on () {
       rethrow;
     }
   }
 
-  void dispose() {
-    _searchTerms.close();
+  Future<void> dispose() async {
+    await _searchTerms.close();
   }
 
   @override

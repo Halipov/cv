@@ -1,4 +1,3 @@
-import 'package:cv/features/common/theme_service.dart';
 import 'package:cv/features/weather/domain/_domain.dart';
 import 'package:cv/util/logger.dart';
 import 'package:equatable/equatable.dart';
@@ -8,17 +7,16 @@ part 'weather_event.dart';
 part 'weather_state.dart';
 
 class WeatherBloc extends Bloc<WeatherEvent, WeatherState> {
-  final IWeatherRepository _weatherRepository;
   //final IThemeService _themeService;
 
   WeatherBloc({
     required IWeatherRepository weatherRepository,
-    required IThemeService themeService,
   })  : _weatherRepository = weatherRepository,
         //     _themeService = themeService,
         super(WeatherLoading()) {
     on<FetchWeatherEvent>(_onFetchWeatherEvent);
   }
+  final IWeatherRepository _weatherRepository;
 
   Future<void> _onFetchWeatherEvent(
     FetchWeatherEvent event,

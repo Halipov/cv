@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:talker_flutter/talker_flutter.dart';
 
 class App extends StatefulWidget {
-  final AppStorage appScope;
-
   const App({
     super.key,
     required this.appScope,
   });
+
+  final AppStorage appScope;
 
   @override
   State<App> createState() => _AppState();
@@ -37,32 +37,30 @@ class _AppState extends State<App> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return AppScope(
-      create: (context) => _scope,
-      child: AnimatedBuilder(
-        animation: _themeService,
-        builder: (context, child) => MaterialApp.router(
-          /// Theme
-          theme: AppThemeData.lightTheme,
-          darkTheme: AppThemeData.darkTheme,
-          themeMode: _scope.themeService.currentThemeMode,
+  Widget build(BuildContext context) => AppScope(
+        create: (context) => _scope,
+        child: AnimatedBuilder(
+          animation: _themeService,
+          builder: (context, child) => MaterialApp.router(
+            /// Theme
+            theme: AppThemeData.lightTheme,
+            darkTheme: AppThemeData.darkTheme,
+            themeMode: _scope.themeService.currentThemeMode,
 
-          /// Localization.
-          locale: _localizations.first,
-          supportedLocales: _localizations,
+            /// Localization.
+            locale: _localizations.first,
+            supportedLocales: _localizations,
 
-          ///Navigation.
-          routeInformationParser: _scope.router.defaultRouteParser(),
-          routerDelegate: _scope.router.delegate(
-            navigatorObservers: () => [
-              TalkerRouteObserver(talker),
-            ],
+            ///Navigation.
+            routeInformationParser: _scope.router.defaultRouteParser(),
+            routerDelegate: _scope.router.delegate(
+              navigatorObservers: () => [
+                TalkerRouteObserver(talker),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 const _localizations = [

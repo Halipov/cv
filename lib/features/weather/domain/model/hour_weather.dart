@@ -6,6 +6,30 @@ part 'hour_weather.g.dart';
 
 @JsonSerializable()
 class HourWeather extends Equatable {
+  const HourWeather({
+    required this.time,
+    required this.temp,
+    required this.isDay,
+    required this.feelsLike,
+    required this.condition,
+    required this.windSpeed,
+    required this.windDirection,
+    required this.pressure,
+    required this.precipitation,
+    required this.humidity,
+    required this.cloud,
+    required this.uv,
+    required this.willItRain,
+    required this.chanceOfRain,
+    required this.willItSnow,
+    required this.chanceOfSnow,
+  });
+
+  factory HourWeather.fromJson(Map<String, dynamic> json) =>
+      _$HourWeatherFromJson(json);
+
+  Map<String, dynamic> toJson() => _$HourWeatherToJson(this);
+
   @JsonKey(name: 'time')
   final DateTime time;
   @JsonKey(name: 'temp_c')
@@ -38,29 +62,6 @@ class HourWeather extends Equatable {
   final int willItSnow;
   @JsonKey(name: 'chance_of_snow')
   final int chanceOfSnow;
-
-  const HourWeather({
-    required this.time,
-    required this.temp,
-    required this.isDay,
-    required this.feelsLike,
-    required this.condition,
-    required this.windSpeed,
-    required this.windDirection,
-    required this.pressure,
-    required this.precipitation,
-    required this.humidity,
-    required this.cloud,
-    required this.uv,
-    required this.willItRain,
-    required this.chanceOfRain,
-    required this.willItSnow,
-    required this.chanceOfSnow,
-  });
-
-  factory HourWeather.fromJson(Map<String, dynamic> json) => _$HourWeatherFromJson(json);
-
-  Map<String, dynamic> toJson() => _$HourWeatherToJson(this);
 
   @override
   List<Object?> get props => [

@@ -10,24 +10,22 @@ class TommorowPage extends StatelessWidget {
   const TommorowPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<WeatherBloc, WeatherState>(
-      builder: (context, state) => switch (state) {
-        WeatherLoading() => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        WeatherLoaded() => _TommorowView(weather: state.weather),
-      },
-    );
-  }
+  Widget build(BuildContext context) => BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) => switch (state) {
+          WeatherLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          WeatherLoaded() => _TommorowView(weather: state.weather),
+        },
+      );
 }
 
 class _TommorowView extends StatelessWidget {
-  final Weather weather;
   const _TommorowView({
-    Key? key,
     required this.weather,
-  }) : super(key: key);
+  });
+
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {

@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/features/common/widgets/base/_base.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
@@ -12,24 +11,23 @@ class ForecastPage extends StatelessWidget {
   const ForecastPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<WeatherBloc, WeatherState>(
-      builder: (context, state) => switch (state) {
-        WeatherLoading() => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        WeatherLoaded() => _ForecastView(weather: state.weather),
-      },
-    );
-  }
+  Widget build(BuildContext context) => BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) => switch (state) {
+          WeatherLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          WeatherLoaded() => _ForecastView(
+              weather: state.weather,
+            ),
+        },
+      );
 }
 
 class _ForecastView extends StatelessWidget {
-  final Weather weather;
   const _ForecastView({
-    Key? key,
     required this.weather,
-  }) : super(key: key);
+  });
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +43,6 @@ class _ForecastView extends StatelessWidget {
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
@@ -78,7 +75,6 @@ class _ForecastView extends StatelessWidget {
               ),
               Image.network(
                 'https:${forecast.day.condition.icon}',
-                scale: 1,
                 filterQuality: FilterQuality.high,
               ),
             ],

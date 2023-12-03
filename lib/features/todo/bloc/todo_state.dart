@@ -10,9 +10,8 @@ sealed class TodoState extends Equatable {
 final class TodoLoading extends TodoState {}
 
 final class TodoLoaded extends TodoState {
-  final List<Todo> todoList;
-
   const TodoLoaded({required this.todoList});
+  final List<Todo> todoList;
 
   @override
   List<Object> get props => [todoList];

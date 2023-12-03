@@ -22,34 +22,39 @@ sealed class StorageType {
 }
 
 class IosStorageType extends StorageType {
-  final IosStorageTypeEnum _iosStorageTypeEnum;
-
   IosStorageType({
     required IosStorageTypeEnum iosStorageTypeEnum,
   }) : _iosStorageTypeEnum = iosStorageTypeEnum;
+  final IosStorageTypeEnum _iosStorageTypeEnum;
 
   @override
   Future<Directory?> getDirectory() async => switch (_iosStorageTypeEnum) {
         IosStorageTypeEnum.temporaryDirectory => await getTemporaryDirectory(),
-        IosStorageTypeEnum.applicationDocumentsDirectory => await getApplicationDocumentsDirectory(),
-        IosStorageTypeEnum.applicationSupportDirectory => await getApplicationSupportDirectory(),
+        IosStorageTypeEnum.applicationDocumentsDirectory =>
+          await getApplicationDocumentsDirectory(),
+        IosStorageTypeEnum.applicationSupportDirectory =>
+          await getApplicationSupportDirectory(),
         IosStorageTypeEnum.libraryDirectory => await getLibraryDirectory(),
       };
 }
 
 class AndroidStorageType extends StorageType {
-  final AndroidStorageTypeEnum _iosStorageTypeEnum;
-
   AndroidStorageType({
     required AndroidStorageTypeEnum iosStorageTypeEnum,
   }) : _iosStorageTypeEnum = iosStorageTypeEnum;
+  final AndroidStorageTypeEnum _iosStorageTypeEnum;
 
   @override
   Future<Directory?> getDirectory() async => switch (_iosStorageTypeEnum) {
-        AndroidStorageTypeEnum.temporaryDirectory => await getTemporaryDirectory(),
-        AndroidStorageTypeEnum.applicationDocumentsDirectory => await getApplicationDocumentsDirectory(),
-        AndroidStorageTypeEnum.applicationSupportDirectory => await getApplicationSupportDirectory(),
-        AndroidStorageTypeEnum.externalStorageDirectory => await getExternalStorageDirectory(),
-        AndroidStorageTypeEnum.externalCachesDirectory => (await getExternalCacheDirectories())?.first,
+        AndroidStorageTypeEnum.temporaryDirectory =>
+          await getTemporaryDirectory(),
+        AndroidStorageTypeEnum.applicationDocumentsDirectory =>
+          await getApplicationDocumentsDirectory(),
+        AndroidStorageTypeEnum.applicationSupportDirectory =>
+          await getApplicationSupportDirectory(),
+        AndroidStorageTypeEnum.externalStorageDirectory =>
+          await getExternalStorageDirectory(),
+        AndroidStorageTypeEnum.externalCachesDirectory =>
+          (await getExternalCacheDirectories())?.first,
       };
 }

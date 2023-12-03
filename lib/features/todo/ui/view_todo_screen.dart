@@ -4,7 +4,5 @@ class ViewTodoScreen extends StatelessWidget {
   const ViewTodoScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return const Scaffold();
-  }
+  Widget build(BuildContext context) => const Scaffold();
 }

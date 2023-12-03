@@ -10,5 +10,5 @@
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "Dart-Code.dart-code",
     },
-    "dart.lineLength": 120,
+    "dart.lineLength": 80,
 }

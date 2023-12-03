@@ -6,6 +6,26 @@ part 'day_weather.g.dart';
 
 @JsonSerializable()
 class DayWeather extends Equatable {
+  const DayWeather({
+    required this.maxTemp,
+    required this.minTemp,
+    required this.condition,
+    required this.avgTemp,
+    required this.maxWind,
+    required this.totalPrecip,
+    required this.totalSnow,
+    required this.avgVis,
+    required this.avgHumidity,
+    required this.dailyWillItRain,
+    required this.dailyChanceOfRain,
+    required this.dailyWillItSnow,
+    required this.dailyChanceOfSnow,
+    required this.uv,
+  });
+
+  factory DayWeather.fromJson(Map<String, dynamic> json) =>
+      _$DayWeatherFromJson(json);
+
   @JsonKey(name: 'maxtemp_c')
   final double maxTemp;
   @JsonKey(name: 'mintemp_c')
@@ -33,25 +53,6 @@ class DayWeather extends Equatable {
   final int dailyChanceOfSnow;
   @JsonKey(name: 'uv')
   final double uv;
-
-  const DayWeather({
-    required this.maxTemp,
-    required this.minTemp,
-    required this.condition,
-    required this.avgTemp,
-    required this.maxWind,
-    required this.totalPrecip,
-    required this.totalSnow,
-    required this.avgVis,
-    required this.avgHumidity,
-    required this.dailyWillItRain,
-    required this.dailyChanceOfRain,
-    required this.dailyWillItSnow,
-    required this.dailyChanceOfSnow,
-    required this.uv,
-  });
-
-  factory DayWeather.fromJson(Map<String, dynamic> json) => _$DayWeatherFromJson(json);
 
   Map<String, dynamic> toJson() => _$DayWeatherToJson(this);
 

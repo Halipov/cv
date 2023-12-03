@@ -5,17 +5,18 @@ part 'condition.g.dart';
 
 @JsonSerializable()
 class Condition extends Equatable {
-  final String text;
-  final String icon;
-  final int code;
-
   const Condition({
     required this.text,
     required this.icon,
     required this.code,
   });
 
-  factory Condition.fromJson(Map<String, dynamic> json) => _$ConditionFromJson(json);
+  factory Condition.fromJson(Map<String, dynamic> json) =>
+      _$ConditionFromJson(json);
+
+  final String text;
+  final String icon;
+  final int code;
 
   Map<String, dynamic> toJson() => _$ConditionToJson(this);
 

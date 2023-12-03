@@ -5,9 +5,11 @@ import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
 class HiveRepository implements ITodoRepository {
-  final HiveService _hiveService;
+  HiveRepository({
+    required HiveService hiveService,
+  }) : _hiveService = hiveService;
 
-  HiveRepository({required HiveService hiveService}) : _hiveService = hiveService;
+  final HiveService _hiveService;
 
   @override
   Future<void> insertTodo(Todo todo) async {
@@ -25,26 +27,24 @@ class HiveRepository implements ITodoRepository {
   }
 
   @override
-  Future<List<Todo>> fetchAllToDo() async {
-    return _hiveService
-        .getAllTodos()
-        .map(
-          (e) => Todo(
-            id: e.key,
-            name: e.name,
-            description: e.description,
-            priorityEnum: PriorityEnum.fromIndex(
-              e.priority.toIndex(),
-            ),
-            isDone: e.isDone,
+  Future<List<Todo>> fetchAllToDo() async => _hiveService
+      .getAllTodos()
+      .map(
+        (e) => Todo(
+          id: e.key.toString(),
+          name: e.name,
+          description: e.description,
+          priorityEnum: PriorityEnum.fromIndex(
+            e.priority.toIndex(),
           ),
-        )
-        .toList();
-  }
+          isDone: e.isDone,
+        ),
+      )
+      .toList();
 
   @override
   Future<void> updateTodo(Todo todo) async {
-    _hiveService.updateToDo(
+    await _hiveService.updateToDo(
       ToDoDto(
         name: todo.name,
         description: todo.description,

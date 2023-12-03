@@ -5,13 +5,16 @@ abstract interface class IWeatherRepositoryStorage {
 }
 
 class WeatherRepositoryStorage implements IWeatherRepositoryStorage {
+  WeatherRepositoryStorage({required IWeatherService weatherService})
+      : _weatherService = weatherService;
+
   final IWeatherService _weatherService;
+
   WeatherApiRepository? _weatherApiRepository;
 
-  WeatherRepositoryStorage({required IWeatherService weatherService}) : _weatherService = weatherService;
-
   @override
-  IWeatherRepository get weatherRepository => _weatherApiRepository ??= WeatherApiRepository(
+  IWeatherRepository get weatherRepository =>
+      _weatherApiRepository ??= WeatherApiRepository(
         weatherApiService: _weatherService,
       );
 }

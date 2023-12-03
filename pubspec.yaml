@@ -7,10 +7,10 @@ environment:
   sdk: ">=3.0.3 <4.0.0"
 
 dependencies:
-  flutter:
-    sdk: flutter
   # Navigation
   auto_route: ^7.8.4
+  flutter:
+    sdk: flutter
   # Http
   dio: ^5.4.0
   retrofit: 4.0.3
@@ -48,6 +48,7 @@ dependencies:
   firebase_ui_auth: ^1.10.0
   cloud_firestore: ^4.13.3
   firebase_in_app_messaging: ^0.7.4+6
+  firebase_analytics: ^10.7.2
 
 dev_dependencies:
   flutter_test:

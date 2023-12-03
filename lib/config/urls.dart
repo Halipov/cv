@@ -1,7 +1,8 @@
 import 'package:cv/config/environment/environment.dart';
 
 /// Server urls.
-abstract class Url {
+class Url {
+  Url._();
   static String get testUrl => '';
   static String get prodUrl => '';
   static String get devUrl => '';

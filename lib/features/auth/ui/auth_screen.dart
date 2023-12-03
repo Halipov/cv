@@ -5,18 +5,16 @@ import 'package:flutter/material.dart';
 
 @RoutePage()
 class AuthScreen extends StatelessWidget {
-  final providers = [EmailAuthProvider()];
   AuthScreen({super.key});
+  final providers = [EmailAuthProvider()];
 
   @override
-  Widget build(BuildContext context) {
-    return SignInScreen(
-      providers: providers,
-      actions: [
-        AuthStateChangeAction<SignedIn>((context, state) {
-          talker.info('signIn');
-        }),
-      ],
-    );
-  }
+  Widget build(BuildContext context) => SignInScreen(
+        providers: providers,
+        actions: [
+          AuthStateChangeAction<SignedIn>((context, state) {
+            talker.info('signIn');
+          }),
+        ],
+      );
 }

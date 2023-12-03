@@ -8,21 +8,18 @@ sealed class TodoEvent extends Equatable {
 }
 
 class AddToDoEvent extends TodoEvent {
-  final Todo todo;
-
   const AddToDoEvent({required this.todo});
+  final Todo todo;
 }
 
 class DeleteToDoEvent extends TodoEvent {
-  final Todo todo;
-
   const DeleteToDoEvent({required this.todo});
+  final Todo todo;
 }
 
 class UpdateToDoEvent extends TodoEvent {
-  final Todo todo;
-
   const UpdateToDoEvent({required this.todo});
+  final Todo todo;
 }
 
 class FetchToDosEvent extends TodoEvent {

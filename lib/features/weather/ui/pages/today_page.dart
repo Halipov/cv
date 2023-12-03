@@ -13,23 +13,21 @@ class TodayPage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<WeatherBloc, WeatherState>(
-      builder: (context, state) => switch (state) {
-        WeatherLoading() => const Center(
-            child: CircularProgressIndicator(),
-          ),
-        WeatherLoaded() => _TodayLoadedView(weather: state.weather),
-      },
-    );
-  }
+  Widget build(BuildContext context) => BlocBuilder<WeatherBloc, WeatherState>(
+        builder: (context, state) => switch (state) {
+          WeatherLoading() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          WeatherLoaded() => _TodayLoadedView(weather: state.weather),
+        },
+      );
 }
 
 class _TodayLoadedView extends StatelessWidget {
-  final Weather weather;
   const _TodayLoadedView({
     required this.weather,
   });
+  final Weather weather;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +94,7 @@ class _TodayLoadedView extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    Text('Hourly forecast')
+                    Text('Hourly forecast'),
                   ],
                 ),
                 const SizedBox(
@@ -128,7 +126,7 @@ class _TodayLoadedView extends StatelessWidget {
                     SizedBox(
                       width: 8,
                     ),
-                    Text('Day forecast')
+                    Text('Day forecast'),
                   ],
                 ),
                 const SizedBox(
@@ -139,7 +137,12 @@ class _TodayLoadedView extends StatelessWidget {
                     maxHeight: 170,
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.only(right: 20, left: 8, top: 16, bottom: 8),
+                    padding: const EdgeInsets.only(
+                      right: 20,
+                      left: 8,
+                      top: 16,
+                      bottom: 8,
+                    ),
                     child: ChartWidget(
                       forecastDayWeatherList: weather.forecast.forecastday,
                     ),

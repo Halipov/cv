@@ -6,13 +6,15 @@ abstract interface class IWeatherServiceStorage {
 }
 
 class WeatherServiceStorage implements IWeatherServiceStorage {
-  final Dio _dio;
-  IWeatherService? _weatherService;
-
   WeatherServiceStorage({
     required Dio dio,
   }) : _dio = dio;
 
+  final Dio _dio;
+
+  IWeatherService? _weatherService;
+
   @override
-  IWeatherService get weatherService => _weatherService ??= WeatherApiService(_dio);
+  IWeatherService get weatherService =>
+      _weatherService ??= WeatherApiService(_dio);
 }

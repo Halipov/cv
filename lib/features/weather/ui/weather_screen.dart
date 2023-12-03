@@ -17,34 +17,32 @@ class WeatherScreen extends StatefulWidget implements AutoRouteWrapper {
   State<WeatherScreen> createState() => _WeatherScreenState();
 
   @override
-  Widget wrappedRoute(BuildContext context) {
-    return WeatherServiceScope(
-      create: (context) => WeatherServiceStorage(
-        dio: AppScope.of(context).dio,
-      ),
-      child: WeatherRepositoryScope(
-        create: (context) => WeatherRepositoryStorage(
-          weatherService: WeatherServiceScope.of(context).weatherService,
+  Widget wrappedRoute(BuildContext context) => WeatherServiceScope(
+        create: (context) => WeatherServiceStorage(
+          dio: AppScope.of(context).dio,
         ),
-        child: BlocProvider<WeatherBloc>(
-          create: (context) => WeatherBloc(
-            themeService: AppScope.of(context).themeService,
-            weatherRepository: WeatherRepositoryScope.of(context).weatherRepository,
-          )..add(
-              FetchWeatherEvent(city: City.london()),
-            ),
-          child: this,
+        child: WeatherRepositoryScope(
+          create: (context) => WeatherRepositoryStorage(
+            weatherService: WeatherServiceScope.of(context).weatherService,
+          ),
+          child: BlocProvider<WeatherBloc>(
+            create: (context) => WeatherBloc(
+              weatherRepository:
+                  WeatherRepositoryScope.of(context).weatherRepository,
+            )..add(
+                FetchWeatherEvent(city: City.london()),
+              ),
+            child: this,
+          ),
         ),
-      ),
-    );
-  }
+      );
 }
 
 final GlobalKey<ScaffoldState> globalScaffoldkey = GlobalKey<ScaffoldState>();
 
 class _WeatherScreenState extends State<WeatherScreen> {
   final ScrollController controller = ScrollController();
-  final ValueNotifier isAnimating = ValueNotifier(false);
+  final isAnimating = ValueNotifier(false);
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
@@ -61,56 +59,54 @@ class _WeatherScreenState extends State<WeatherScreen> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ValueListenableBuilder(
-        valueListenable: isAnimating,
-        builder: (context, value, child) => IgnorePointer(
-          ignoring: value,
-          child: child,
-        ),
-        child: AutoTabsRouter.tabBar(
-          routes: const [
-            TodayTab(),
-            TommorowTab(),
-            ForecastTab(),
-          ],
-          builder: (context, child, tabController) {
-            talker.info(tabController.index);
-            return NestedScrollView(
-              controller: controller,
-              headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                SliverPersistentHeader(
-                  pinned: true,
-                  floating: false,
-                  delegate: CustomHeaderDelegate(
-                    tabsController: tabController,
+  Widget build(BuildContext context) => Scaffold(
+        body: ValueListenableBuilder<bool>(
+          valueListenable: isAnimating,
+          builder: (context, value, child) => IgnorePointer(
+            ignoring: value,
+            child: child,
+          ),
+          child: AutoTabsRouter.tabBar(
+            routes: const [
+              TodayTab(),
+              TommorowTab(),
+              ForecastTab(),
+            ],
+            builder: (context, child, tabController) {
+              talker.info(tabController.index);
+              return NestedScrollView(
+                controller: controller,
+                headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverPersistentHeader(
+                    pinned: true,
+                    delegate: CustomHeaderDelegate(
+                      tabsController: tabController,
+                    ),
+                  ),
+                ],
+                body: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: BlocBuilder<WeatherBloc, WeatherState>(
+                    builder: (context, state) => switch (state) {
+                      WeatherLoading() => const Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      WeatherLoaded() => child,
+                    },
                   ),
                 ),
-              ],
-              body: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: BlocBuilder<WeatherBloc, WeatherState>(
-                  builder: (context, state) => switch (state) {
-                    WeatherLoading() => const Center(
-                        child: CircularProgressIndicator(),
-                      ),
-                    WeatherLoaded() => child,
-                  },
-                ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
-      ),
-    );
-  }
+      );
 
-  void _scrollListener() {
-    if (!controller.position.isScrollingNotifier.value && isAnimating.value && controller.offset < 215) {
+  Future<void> _scrollListener() async {
+    final isScrollingValue = controller.position.isScrollingNotifier.value;
+    if (!isScrollingValue && isAnimating.value && controller.offset < 215) {
       isAnimating.value = !isAnimating.value;
       if (controller.offset < 150) {
-        controller
+        await controller
             .animateTo(
               0,
               duration: const Duration(milliseconds: 300),
@@ -118,7 +114,7 @@ class _WeatherScreenState extends State<WeatherScreen> {
             )
             .then((value) => isAnimating.value = false);
       } else {
-        controller
+        await controller
             .animateTo(
               200,
               duration: const Duration(milliseconds: 300),

@@ -5,9 +5,12 @@ import 'package:cv/features/todo/domain/repository/todo_repository.dart';
 import 'package:cv/features/todo/enum/priority_enum.dart';
 
 class SqfliteRepository implements ITodoRepository {
+  SqfliteRepository({
+    required SqfliteService sqfliteService,
+  }) : _service = sqfliteService;
+
   final SqfliteService _service;
 
-  SqfliteRepository({required SqfliteService sqfliteService}) : _service = sqfliteService;
   @override
   Future<void> deleteTodo(Todo todo) async {
     try {
@@ -20,7 +23,7 @@ class SqfliteRepository implements ITodoRepository {
           isDone: todo.isDone ? 1 : 0,
         ),
       );
-    } catch (_) {
+    } on () {
       rethrow;
     }
   }
@@ -36,12 +39,12 @@ class SqfliteRepository implements ITodoRepository {
               name: e.name,
               description: e.description,
               priorityEnum: PriorityEnum.fromIndex(e.priorityId),
-              isDone: e.isDone == 0 ? false : true,
+              isDone: e.isDone != 0,
             ),
           )
           .toList();
       return entities;
-    } catch (_) {
+    } on () {
       rethrow;
     }
   }
@@ -49,7 +52,7 @@ class SqfliteRepository implements ITodoRepository {
   @override
   Future<void> insertTodo(Todo todo) async {
     try {
-      _service.insertToDo(
+      await _service.insertToDo(
         ToDoDto(
           id: int.parse(todo.id),
           name: todo.name,
@@ -58,7 +61,7 @@ class SqfliteRepository implements ITodoRepository {
           isDone: todo.isDone ? 1 : 0,
         ),
       );
-    } catch (_) {
+    } on () {
       rethrow;
     }
   }
@@ -66,7 +69,7 @@ class SqfliteRepository implements ITodoRepository {
   @override
   Future<void> updateTodo(Todo todo) async {
     try {
-      _service.updateToDo(
+      await _service.updateToDo(
         ToDoDto(
           id: int.parse(todo.id),
           name: todo.name,
@@ -75,7 +78,7 @@ class SqfliteRepository implements ITodoRepository {
           isDone: todo.isDone ? 1 : 0,
         ),
       );
-    } catch (_) {
+    } on () {
       rethrow;
     }
   }

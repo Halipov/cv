@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 
 /// Environment configuration.
 class Environment implements Listenable {
+  Environment._(
+    this._currentBuildType,
+    AppConfig config,
+  ) : _config = ValueNotifier<AppConfig>(config);
+
+  factory Environment.instance() => _instance!;
   static Environment? _instance;
   final BuildType _currentBuildType;
 
@@ -15,11 +21,6 @@ class Environment implements Listenable {
   bool get isRelease => _currentBuildType == BuildType.release;
 
   BuildType get buildType => _currentBuildType;
-
-  Environment._(this._currentBuildType, AppConfig config)
-      : _config = ValueNotifier<AppConfig>(config);
-
-  factory Environment.instance() => _instance!;
 
   @override
   void addListener(VoidCallback listener) {

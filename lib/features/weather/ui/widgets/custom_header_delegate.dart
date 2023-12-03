@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/assets/color/color_scheme.dart';
 import 'package:cv/features/weather/bloc/weather_bloc.dart';
@@ -10,10 +9,15 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
-  final TabController tabsController;
   CustomHeaderDelegate({required this.tabsController});
+
+  final TabController tabsController;
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final double progress;
     if (shrinkOffset > 200) {
       progress = 1;
@@ -67,10 +71,12 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  OverScrollHeaderStretchConfiguration get stretchConfiguration => OverScrollHeaderStretchConfiguration();
+  OverScrollHeaderStretchConfiguration get stretchConfiguration =>
+      OverScrollHeaderStretchConfiguration();
 
   @override
-  FloatingHeaderSnapConfiguration? get snapConfiguration => FloatingHeaderSnapConfiguration();
+  FloatingHeaderSnapConfiguration? get snapConfiguration =>
+      FloatingHeaderSnapConfiguration();
 
   @override
   double get maxExtent => 430;
@@ -79,17 +85,16 @@ class CustomHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 230;
 
   @override
-  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) {
-    return maxExtent != oldDelegate.maxExtent || minExtent != oldDelegate.minExtent;
-  }
+  bool shouldRebuild(covariant SliverPersistentHeaderDelegate oldDelegate) =>
+      maxExtent != oldDelegate.maxExtent || minExtent != oldDelegate.minExtent;
 }
 
 class WeatherTabBar extends StatefulWidget {
-  final TabController tabsController;
   const WeatherTabBar({
     super.key,
     required this.tabsController,
   });
+  final TabController tabsController;
 
   @override
   State<WeatherTabBar> createState() => _WeatherTabBarState();
@@ -108,23 +113,24 @@ class _WeatherTabBarState extends State<WeatherTabBar> {
   Widget build(BuildContext context) {
     final tabsRouter = AutoTabsRouter.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        ...WeatherTabEnum.values
-            .map(
-              (e) => GestureDetector(
-                onTap: () {
-                  widget.tabsController.animateTo(e.index);
-                },
-                child: ForecastButton(
-                  index: e.index,
-                  isSelected: tabsRouter.activeIndex == e.index,
-                  text: e.toString(),
-                ),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          ...WeatherTabEnum.values.map(
+            (e) => GestureDetector(
+              onTap: () {
+                widget.tabsController.animateTo(e.index);
+              },
+              child: ForecastButton(
+                index: e.index,
+                isSelected: tabsRouter.activeIndex == e.index,
+                text: e.toString(),
               ),
-            )
-            .toList(),
-      ]),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -168,42 +174,45 @@ class ForecastButton extends StatelessWidget {
 }
 
 class ExpandedAppBar extends StatelessWidget {
+  const ExpandedAppBar({
+    super.key,
+    required this.weather,
+    required this.progress,
+  });
   final Weather weather;
   final double progress;
-  const ExpandedAppBar({super.key, required this.weather, required this.progress});
 
   @override
-  Widget build(BuildContext context) {
-    return Expanded(
-      child: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: weather.current.isDay
-                ? const AssetImage('assets/day_background.jpg')
-                : const AssetImage('assets/night_background.jpg'),
-            fit: BoxFit.none,
-            opacity: 1 - progress,
+  Widget build(BuildContext context) => Expanded(
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: weather.current.isDay
+                  ? const AssetImage('assets/day_background.jpg')
+                  : const AssetImage('assets/night_background.jpg'),
+              fit: BoxFit.none,
+              opacity: 1 - progress,
+            ),
+            borderRadius: const BorderRadius.vertical(
+              bottom: Radius.circular(30),
+            ),
           ),
-          borderRadius: const BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 23,
-          ).copyWith(
-            top: 16,
-          ),
-          child: Stack(
-            children: [
-              const SizedBox(
-                height: 40,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                  top: 50,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 23,
+            ).copyWith(
+              top: 16,
+            ),
+            child: Stack(
+              children: [
+                const SizedBox(
+                  height: 40,
                 ),
-                child: CustomSearchBar(
+                Padding(
+                  padding: const EdgeInsets.only(
+                    top: 50,
+                  ),
+                  child: CustomSearchBar(
                     initialQuery: weather.location.name,
                     color: Color.lerp(
                       Colors.white.withOpacity(0.9),
@@ -216,86 +225,86 @@ class ExpandedAppBar extends StatelessWidget {
                           city: city,
                         ),
                       );
-                    }),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 40.0),
-                child: Stack(
-                  children: [
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Padding(
-                        padding: EdgeInsets.lerp(
-                          const EdgeInsets.only(bottom: 20),
-                          const EdgeInsets.only(top: 40),
-                          progress,
-                        )!,
-                        child: Row(
-                          children: [
-                            Text(
-                              '${weather.current.temp.toInt()}°',
-                              style: TextStyle.lerp(
-                                TextStyle(
-                                  fontSize: 100,
-                                  color: Colors.white.withOpacity(0.8),
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 40),
+                  child: Stack(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Padding(
+                          padding: EdgeInsets.lerp(
+                            const EdgeInsets.only(bottom: 20),
+                            const EdgeInsets.only(top: 40),
+                            progress,
+                          )!,
+                          child: Row(
+                            children: [
+                              Text(
+                                '${weather.current.temp.toInt()}°',
+                                style: TextStyle.lerp(
+                                  TextStyle(
+                                    fontSize: 100,
+                                    color: Colors.white.withOpacity(0.8),
+                                  ),
+                                  TextStyle(
+                                    fontSize: 40,
+                                    color: AppColorScheme.of(context).onSurface,
+                                  ),
+                                  progress,
                                 ),
-                                TextStyle(
-                                  fontSize: 40,
-                                  color: AppColorScheme.of(context).onSurface,
-                                ),
-                                progress,
                               ),
-                            ),
-                            const Spacer(),
-                            Image.network(
-                              'https:${weather.current.condition.icon}',
-                              scale: 0.5,
-                              filterQuality: FilterQuality.high,
-                              height: 150 - 70 * progress,
-                              width: 150 - 70 * progress,
-                            ),
-                          ],
+                              const Spacer(),
+                              Image.network(
+                                'https:${weather.current.condition.icon}',
+                                scale: 0.5,
+                                filterQuality: FilterQuality.high,
+                                height: 150 - 70 * progress,
+                                width: 150 - 70 * progress,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Align(
-                      alignment: Alignment.lerp(
-                        Alignment.bottomCenter,
-                        Alignment.bottomLeft,
-                        progress,
-                      )!,
-                      child: Padding(
-                        padding: EdgeInsets.lerp(
-                          const EdgeInsets.only(bottom: 20),
-                          const EdgeInsets.only(
-                            bottom: 15,
-                            left: 60,
-                          ),
+                      Align(
+                        alignment: Alignment.lerp(
+                          Alignment.bottomCenter,
+                          Alignment.bottomLeft,
                           progress,
                         )!,
-                        child: Text(
-                          'Feels like ${weather.current.feelsLike}°',
-                          style: TextStyle.lerp(
-                            const TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                            ),
-                            TextStyle(
-                              fontSize: 12,
-                              color: AppColorScheme.of(context).onSurface,
+                        child: Padding(
+                          padding: EdgeInsets.lerp(
+                            const EdgeInsets.only(bottom: 20),
+                            const EdgeInsets.only(
+                              bottom: 15,
+                              left: 60,
                             ),
                             progress,
+                          )!,
+                          child: Text(
+                            'Feels like ${weather.current.feelsLike}°',
+                            style: TextStyle.lerp(
+                              const TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                              TextStyle(
+                                fontSize: 12,
+                                color: AppColorScheme.of(context).onSurface,
+                              ),
+                              progress,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 }

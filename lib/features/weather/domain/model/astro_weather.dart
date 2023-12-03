@@ -5,15 +5,6 @@ part 'astro_weather.g.dart';
 
 @JsonSerializable()
 class AstroWeather extends Equatable {
-  final String sunrise;
-  final String sunset;
-  final String moonrise;
-  final String moonset;
-  @JsonKey(name: 'moon_phase')
-  final String moonPhase;
-  @JsonKey(name: 'moon_illumination')
-  final double moonIllumination;
-
   const AstroWeather({
     required this.sunrise,
     required this.sunset,
@@ -23,9 +14,19 @@ class AstroWeather extends Equatable {
     required this.moonIllumination,
   });
 
-  factory AstroWeather.fromJson(Map<String, dynamic> json) => _$AstroWeatherFromJson(json);
+  factory AstroWeather.fromJson(Map<String, dynamic> json) =>
+      _$AstroWeatherFromJson(json);
 
   Map<String, dynamic> toJson() => _$AstroWeatherToJson(this);
+
+  final String sunrise;
+  final String sunset;
+  final String moonrise;
+  final String moonset;
+  @JsonKey(name: 'moon_phase')
+  final String moonPhase;
+  @JsonKey(name: 'moon_illumination')
+  final double moonIllumination;
 
   @override
   List<Object?> get props => [

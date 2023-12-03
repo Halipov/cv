@@ -4,24 +4,6 @@ import 'package:flutter/material.dart';
 
 /// App text style scheme.
 class AppTextTheme extends ThemeExtension<AppTextTheme> {
-  /// Text style 14_140.
-  final TextStyle regular14;
-
-  /// Text style 16_124.
-  final TextStyle regular16;
-
-  /// Text style 14_140_500.
-  final TextStyle medium14;
-
-  /// Text style 16_124_500.
-  final TextStyle medium16;
-
-  /// Text style 14_140_700.
-  final TextStyle bold14;
-
-  /// Text style 16_124_700.
-  final TextStyle bold16;
-
   AppTextTheme._({
     required this.regular14,
     required this.regular16,
@@ -51,6 +33,13 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
         bold14 = AppTextStyle.bold14.value,
         bold16 = AppTextStyle.bold16.value;
 
+  final TextStyle regular14;
+  final TextStyle regular16;
+  final TextStyle medium14;
+  final TextStyle medium16;
+  final TextStyle bold14;
+  final TextStyle bold16;
+
   @override
   ThemeExtension<AppTextTheme> lerp(
     ThemeExtension<AppTextTheme>? other,
@@ -71,9 +60,11 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
   }
 
   /// Return text theme for app from context.
-  static AppTextTheme of(BuildContext context) {
-    return Theme.of(context).extension<AppTextTheme>() ?? _throwThemeExceptionFromFunc(context);
-  }
+  static AppTextTheme of(BuildContext context) =>
+      Theme.of(context).extension<AppTextTheme>() ??
+      _throwThemeExceptionFromFunc(
+        context,
+      );
 
   /// @nodoc.
   @override
@@ -84,16 +75,17 @@ class AppTextTheme extends ThemeExtension<AppTextTheme> {
     TextStyle? medium16,
     TextStyle? bold14,
     TextStyle? bold16,
-  }) {
-    return AppTextTheme._(
-      regular14: regular14 ?? this.regular14,
-      regular16: regular16 ?? this.regular16,
-      medium14: medium14 ?? this.medium14,
-      medium16: medium16 ?? this.medium16,
-      bold14: bold14 ?? this.bold14,
-      bold16: bold16 ?? this.bold16,
-    );
-  }
+  }) =>
+      AppTextTheme._(
+        regular14: regular14 ?? this.regular14,
+        regular16: regular16 ?? this.regular16,
+        medium14: medium14 ?? this.medium14,
+        medium16: medium16 ?? this.medium16,
+        bold14: bold14 ?? this.bold14,
+        bold16: bold16 ?? this.bold16,
+      );
 }
 
-Never _throwThemeExceptionFromFunc(BuildContext context) => throw Exception('$AppTextTheme не найдена в $context');
+Never _throwThemeExceptionFromFunc(BuildContext context) => throw Exception(
+      '$AppTextTheme не найдена в $context',
+    );

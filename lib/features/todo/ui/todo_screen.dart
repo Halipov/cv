@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:auto_route/auto_route.dart';
 import 'package:cv/assets/color/color_scheme.dart';
 import 'package:cv/features/common/widgets/di_scope/app_scope.dart';
@@ -14,28 +13,27 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
   const TodoScreen({super.key});
   @override
-  Widget wrappedRoute(BuildContext context) {
-    return ToDoRepositoryScope(
-      create: (context) => TodoRepositoryStorage(
-        sqfliteService: AppScope.of(context).sqfliteService,
-        hiveService: AppScope.of(context).hiveService,
-        deviceStorageService: AppScope.of(context).deviceStorageService,
-      ),
-      child: BlocProvider<TodoBloc>(
-        create: (context) => TodoBloc(
-          persistenceTodoRepository: ToDoRepositoryScope.of(context).firestoreTodoRepository,
-        )..add(
-            const FetchToDosEvent(),
-          ),
-        child: this,
-      ),
-    );
-  }
+  Widget wrappedRoute(BuildContext context) => ToDoRepositoryScope(
+        create: (context) => TodoRepositoryStorage(
+          sqfliteService: AppScope.of(context).sqfliteService,
+          hiveService: AppScope.of(context).hiveService,
+          deviceStorageService: AppScope.of(context).deviceStorageService,
+        ),
+        child: BlocProvider<TodoBloc>(
+          create: (context) => TodoBloc(
+            todoRepository:
+                ToDoRepositoryScope.of(context).firestoreTodoRepository,
+          )..add(
+              const FetchToDosEvent(),
+            ),
+          child: this,
+        ),
+      );
 
   @override
   Widget build(BuildContext context) {
     final theme = AppColorScheme.of(context);
-    double screenHeight = MediaQuery.of(context).size.height;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Scaffold(
       backgroundColor: theme.primary,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -66,7 +64,6 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
             child: Column(
               children: [
                 Row(
-                  mainAxisSize: MainAxisSize.max,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +76,7 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                           ),
                         ),
                         Text(
-                          'Let\'s be productive today!',
+                          "Let's be productive today!",
                           style: TextStyle(
                             fontSize: 16,
                             color: theme.onPrimary.withOpacity(0.9),
@@ -106,20 +103,18 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                     scrollDirection: Axis.horizontal,
                     itemCount: 4,
                     shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8.0,
+                    itemBuilder: (context, index) => Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                      ),
+                      child: Container(
+                        width: 100,
+                        decoration: BoxDecoration(
+                          color: theme.primary.withOpacity(1),
+                          borderRadius: BorderRadius.circular(15),
                         ),
-                        child: Container(
-                          width: 100,
-                          decoration: BoxDecoration(
-                            color: theme.primary.withOpacity(1),
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                        ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -149,7 +144,7 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                     //       .map(
                     //         (e) => Expanded(
                     //           child: Padding(
-                    //             padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    //   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                     //             child: BaseContainer(
                     //               child: Text(
                     //                 e.toString(),
@@ -168,7 +163,6 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                       child: BlocBuilder<TodoBloc, TodoState>(
                         builder: (context, state) => switch (state) {
                           TodoLoading() => const Column(
-                              crossAxisAlignment: CrossAxisAlignment.center,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 CircularProgressIndicator(),
@@ -201,7 +195,7 @@ class TodoScreen extends StatelessWidget implements AutoRouteWrapper {
                             ),
                         },
                       ),
-                    )
+                    ),
                   ],
                 ),
               ),

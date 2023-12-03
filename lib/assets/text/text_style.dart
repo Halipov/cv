@@ -1,5 +1,3 @@
-//ignore_for_file: public_member_api_docs
-
 import 'package:flutter/material.dart';
 
 /// App text style.
@@ -13,7 +11,7 @@ enum AppTextStyle {
   bold14(TextStyle(fontSize: 14, height: 1.40, fontWeight: FontWeight.w700)),
   bold16(TextStyle(fontSize: 16, height: 1.24, fontWeight: FontWeight.w700));
 
-  final TextStyle value;
-
   const AppTextStyle(this.value);
+
+  final TextStyle value;
 }

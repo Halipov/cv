@@ -22,6 +22,12 @@ abstract class IAppStorage {
 }
 
 class AppStorage implements IAppStorage {
+  AppStorage() {
+    final additionalInterceptors = <Interceptor>[];
+    _dio = _initDio(additionalInterceptors);
+    _router = AppRouter.instance();
+    _themeModeStorage = ThemeModeStorageImpl();
+  }
   static const _themeByDefault = ThemeMode.system;
 
   late final Dio _dio;
@@ -45,16 +51,10 @@ class AppStorage implements IAppStorage {
 
   late IThemeModeStorage _themeModeStorage;
 
-  AppStorage() {
-    final additionalInterceptors = <Interceptor>[];
-    _dio = _initDio(additionalInterceptors);
-    _router = AppRouter.instance();
-    _themeModeStorage = ThemeModeStorageImpl();
-  }
-
   @override
   Future<void> initTheme() async {
-    final theme = await ThemeModeStorageImpl().getThemeMode() ?? _themeByDefault;
+    final theme =
+        await ThemeModeStorageImpl().getThemeMode() ?? _themeByDefault;
     _themeService = ThemeServiceImpl(theme);
     _themeService.addListener(_onThemeModeChanged);
   }

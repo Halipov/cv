@@ -6,7 +6,7 @@ class SqfliteService {
   late Database _database;
 
   Future<void> init() async {
-    String path = await getDatabasesPath();
+    final path = await getDatabasesPath();
 
     _database = await openDatabase(
       join(path, 'database.db'),
@@ -42,8 +42,14 @@ class SqfliteService {
   }
 
   Future<List<ToDoDto>> getAllTodos() async {
-    var res = await _database.query("todo");
-    List<ToDoDto> list = res.isNotEmpty ? res.map((c) => ToDoDto.fromJson(c)).toList() : [];
+    final res = await _database.query('todo');
+    final list = res.isNotEmpty
+        ? res
+            .map(
+              ToDoDto.fromJson,
+            )
+            .toList()
+        : <ToDoDto>[];
     return list;
   }
 
@@ -57,12 +63,21 @@ class SqfliteService {
   }
 
   Future<int> updateToDo(ToDoDto todo) async {
-    final resultId = await _database.update("todo", todo.toJson(), where: "id = ?", whereArgs: [todo.id]);
+    final resultId = await _database.update(
+      'todo',
+      todo.toJson(),
+      where: 'id = ?',
+      whereArgs: [todo.id],
+    );
     return resultId;
   }
 
   Future<int> deleteTodo(ToDoDto todo) async {
-    final resultId = await _database.delete("todo", where: "id = ?", whereArgs: [todo.id]);
+    final resultId = await _database.delete(
+      'todo',
+      where: 'id = ?',
+      whereArgs: [todo.id],
+    );
     return resultId;
   }
 }
